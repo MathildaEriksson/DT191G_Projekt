@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using EquiMarketApp.Models;
 
 namespace EquiMarketApp.Controllers;
@@ -17,7 +18,7 @@ public class HomeController : Controller
     {
         return View();
     }
-
+    [Authorize] /* Test med authorization ta bort detta sen */
     public IActionResult Privacy()
     {
         return View();
