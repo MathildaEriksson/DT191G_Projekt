@@ -31,7 +31,6 @@ public class Ad
     [Range(0, double.MaxValue, ErrorMessage = "Priset måste vara ett positivt tal.")]
     public decimal Price { get; set; }
 
-    [Required]
     public DateTime CreatedAt { get; set; }
 
     [Required]

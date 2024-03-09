@@ -32,15 +32,18 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"
-                                asp-action="Privacy">Privacy</a>
-                        </li>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Ad" asp-action="Index">Skapa
+                                    annons</a>
+                            </li>
+                        }
                         @if (isUserAdmin)
                         {
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdownMenuLink"
-                                    role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle text-dark" id="navbarDropdownMenuLink" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
                                     Admin
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -50,6 +53,8 @@
                                             asp-action="Index">Län</a></li>
                                     <li><a class="dropdown-item" asp-area="" asp-controller="City"
                                             asp-action="Index">Städer</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Breed"
+                                            asp-action="Index">Raser</a></li>
                                     <li><a class="dropdown-item" asp-area="" asp-controller="AdType"
                                             asp-action="Index">Annonstyper</a></li>
                                     <!-- Lägg till länkar för andra admin-funktioner här -->
