@@ -46,6 +46,8 @@ public class Ad
     [StringLength(100, ErrorMessage = "Namnet får inte vara längre än 100 tecken.")]
     public string? Name { get; set; }
 
+    public Gender Gender { get; set; }
+
     public bool IsApproved { get; set; } = false;
 
     [ForeignKey("Breed")]
@@ -55,10 +57,6 @@ public class Ad
     [ForeignKey("Origin")]
     public int OriginId { get; set; }
     public Origin? Origin { get; set; }
-
-    [ForeignKey("Gender")]
-    public int GenderId { get; set; }
-    public Gender? Gender { get; set; }
 
     [Required]
     public int AdTypeId { get; set; }
