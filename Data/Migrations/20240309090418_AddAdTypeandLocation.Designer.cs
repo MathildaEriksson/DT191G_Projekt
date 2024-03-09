@@ -3,6 +3,7 @@ using System;
 using EquiMarketApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EquiMarketApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240309090418_AddAdTypeandLocation")]
+    partial class AddAdTypeandLocation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.2");
@@ -102,7 +105,7 @@ namespace EquiMarketApp.Data.Migrations
 
                     b.HasKey("AdTypeId");
 
-                    b.ToTable("AdTypes");
+                    b.ToTable("AdType");
                 });
 
             modelBuilder.Entity("EquiMarketApp.Models.Breed", b =>
@@ -138,7 +141,7 @@ namespace EquiMarketApp.Data.Migrations
 
                     b.HasIndex("CountyId");
 
-                    b.ToTable("Cities");
+                    b.ToTable("City");
                 });
 
             modelBuilder.Entity("EquiMarketApp.Models.County", b =>
@@ -154,7 +157,7 @@ namespace EquiMarketApp.Data.Migrations
 
                     b.HasKey("CountyId");
 
-                    b.ToTable("Counties");
+                    b.ToTable("County");
                 });
 
             modelBuilder.Entity("EquiMarketApp.Models.Gender", b =>

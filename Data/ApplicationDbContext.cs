@@ -16,4 +16,8 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<Breed> Breeds { get; set; }
     public DbSet<Origin> Origins { get; set; }
     public DbSet<Gender> Genders { get; set; }
+    public DbSet<AdType> AdTypes { get; set; }
+    public DbSet<County> Counties { get; set; }
+    public DbSet<City> Cities { get; set; }
+
 }

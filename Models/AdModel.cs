@@ -60,5 +60,12 @@ public class Ad
     public int GenderId { get; set; }
     public Gender? Gender { get; set; }
 
+    [Required]
+    public int AdTypeId { get; set; }
+    public AdType? AdType { get; set; }
+
+    public int CityId { get; set; }
+    public City? Location { get; set; }
+
     public IdentityUser? User { get; set; }
 }
