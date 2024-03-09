@@ -12,22 +12,23 @@ using Microsoft.AspNetCore.Authorization;
 namespace EquiMarketApp.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class CountyController : Controller
+    public class CityController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public CountyController(ApplicationDbContext context)
+        public CityController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: County
+        // GET: City
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Counties.ToListAsync());
+            var applicationDbContext = _context.Cities.Include(c => c.County);
+            return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: County/Details/5
+        // GET: City/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -35,39 +36,42 @@ namespace EquiMarketApp.Controllers
                 return NotFound();
             }
 
-            var county = await _context.Counties
-                .FirstOrDefaultAsync(m => m.CountyId == id);
-            if (county == null)
+            var city = await _context.Cities
+                .Include(c => c.County)
+                .FirstOrDefaultAsync(m => m.CityId == id);
+            if (city == null)
             {
                 return NotFound();
             }
 
-            return View(county);
+            return View(city);
         }
 
-        // GET: County/Create
+        // GET: City/Create
         public IActionResult Create()
         {
+            ViewData["CountyId"] = new SelectList(_context.Counties, "CountyId", "Name");
             return View();
         }
 
-        // POST: County/Create
+        // POST: City/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CountyId,Name")] County county)
+        public async Task<IActionResult> Create([Bind("CityId,Name,CountyId")] City city)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(county);
+                _context.Add(city);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(county);
+            ViewData["CountyId"] = new SelectList(_context.Counties, "CountyId", "Name", city.CountyId);
+            return View(city);
         }
 
-        // GET: County/Edit/5
+        // GET: City/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -75,22 +79,23 @@ namespace EquiMarketApp.Controllers
                 return NotFound();
             }
 
-            var county = await _context.Counties.FindAsync(id);
-            if (county == null)
+            var city = await _context.Cities.FindAsync(id);
+            if (city == null)
             {
                 return NotFound();
             }
-            return View(county);
+            ViewData["CountyId"] = new SelectList(_context.Counties, "CountyId", "Name", city.CountyId);
+            return View(city);
         }
 
-        // POST: County/Edit/5
+        // POST: City/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CountyId,Name")] County county)
+        public async Task<IActionResult> Edit(int id, [Bind("CityId,Name,CountyId")] City city)
         {
-            if (id != county.CountyId)
+            if (id != city.CityId)
             {
                 return NotFound();
             }
@@ -99,12 +104,12 @@ namespace EquiMarketApp.Controllers
             {
                 try
                 {
-                    _context.Update(county);
+                    _context.Update(city);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CountyExists(county.CountyId))
+                    if (!CityExists(city.CityId))
                     {
                         return NotFound();
                     }
@@ -115,10 +120,11 @@ namespace EquiMarketApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(county);
+            ViewData["CountyId"] = new SelectList(_context.Counties, "CountyId", "Name", city.CountyId);
+            return View(city);
         }
 
-        // GET: County/Delete/5
+        // GET: City/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -126,44 +132,35 @@ namespace EquiMarketApp.Controllers
                 return NotFound();
             }
 
-            var county = await _context.Counties
-                .FirstOrDefaultAsync(m => m.CountyId == id);
-            if (county == null)
+            var city = await _context.Cities
+                .Include(c => c.County)
+                .FirstOrDefaultAsync(m => m.CityId == id);
+            if (city == null)
             {
                 return NotFound();
             }
 
-            return View(county);
+            return View(city);
         }
 
-        // POST: County/Delete/5
+        // POST: City/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var county = await _context.Counties
-        .Include(c => c.Cities) // Ladda relaterade städer
-        .FirstOrDefaultAsync(m => m.CountyId == id);
-
-            if (county.Cities.Any())
+            var city = await _context.Cities.FindAsync(id);
+            if (city != null)
             {
-                // Skicka tillbaka ett felmeddelande till vyn.
-                TempData["ErrorMessage"] = "Radering av län som har städer är inte tillåtet.";
-                return RedirectToAction(nameof(Index));
+                _context.Cities.Remove(city);
             }
 
-            if (county != null)
-            {
-                _context.Counties.Remove(county);
-                await _context.SaveChangesAsync();
-            }
-
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CountyExists(int id)
+        private bool CityExists(int id)
         {
-            return _context.Counties.Any(e => e.CountyId == id);
+            return _context.Cities.Any(e => e.CityId == id);
         }
     }
 }
