@@ -71,10 +71,16 @@ namespace EquiMarketApp.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AdId,UserId,Title,Description,Price,BirthYear,Height,Name,Gender,IsApproved,BreedId,OriginId,AdTypeId,CityId")] Ad ad)
+        public async Task<IActionResult> Create([Bind("AdId,Title,Description,Price,BirthYear,Height,Name,Gender,IsApproved,BreedId,OriginId,AdTypeId,CityId")] Ad ad)
         {
             if (ModelState.IsValid)
             {
+                var user = await _userManager.GetUserAsync(User);
+                if (user != null)
+                {
+                    ad.UserId = user.Id;
+                }
+
                 _context.Add(ad);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -119,7 +125,7 @@ namespace EquiMarketApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AdId,UserId,Title,Description,Price,BirthYear,Height,Name,Gender,IsApproved,BreedId,OriginId,AdTypeId,CityId")] Ad ad)
+        public async Task<IActionResult> Edit(int id, [Bind("AdId,Title,Description,Price,BirthYear,Height,Name,Gender,IsApproved,BreedId,OriginId,AdTypeId,CityId")] Ad ad)
         {
             if (id != ad.AdId)
             {

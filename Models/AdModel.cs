@@ -16,7 +16,6 @@ public class Ad
     [Key]
     public int AdId { get; set; }
 
-    [Required]
     public string? UserId { get; set; }
 
     [Required]
@@ -64,5 +63,6 @@ public class Ad
     public int CityId { get; set; }
     public City? Location { get; set; }
 
+    [ForeignKey("UserId")]
     public ApplicationUser? User { get; set; }
 }
