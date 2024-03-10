@@ -27,8 +27,19 @@ namespace EquiMarketApp.Controllers
         // GET: Ad
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Ads.Include(a => a.AdType).Include(a => a.Breed).Include(a => a.Location).Include(a => a.Origin).Include(a => a.User);
-            return View(await applicationDbContext.ToListAsync());
+            if (User.IsInRole("Admin"))
+            {
+                // Admin can see all ads
+                var allAds = _context.Ads.Include(a => a.AdType).Include(a => a.Breed).Include(a => a.Location).Include(a => a.Origin).Include(a => a.User);
+                return View(await allAds.ToListAsync());
+            }
+            else
+            {
+                // Regular user can only see their own ads
+                var userId = _userManager.GetUserId(User);
+                var userAds = _context.Ads.Where(a => a.UserId == userId).Include(a => a.AdType).Include(a => a.Breed).Include(a => a.Location).Include(a => a.Origin).Include(a => a.User);
+                return View(await userAds.ToListAsync());
+            }
         }
 
         // GET: Ad/Details/5
@@ -132,10 +143,20 @@ namespace EquiMarketApp.Controllers
                 return NotFound();
             }
 
+            var existingAd = await _context.Ads.AsNoTracking().FirstOrDefaultAsync(a => a.AdId == id);
+            if (existingAd == null)
+            {
+                return NotFound();
+            }
+
             if (ModelState.IsValid)
             {
                 try
                 {
+                    // Keep current userID
+                    ad.UserId = existingAd.UserId;
+
+                    // Check if user is owner of ad or admin
                     if (ad.UserId != _userManager.GetUserId(User) && !User.IsInRole("Admin"))
                     {
                         return Forbid();
@@ -157,13 +178,14 @@ namespace EquiMarketApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["AdTypeId"] = new SelectList(_context.AdTypes, "AdTypeId", "Name", ad.AdTypeId);
             ViewData["BreedId"] = new SelectList(_context.Breeds, "BreedId", "Name", ad.BreedId);
             ViewData["CityId"] = new SelectList(_context.Cities, "CityId", "Name", ad.CityId);
             ViewData["OriginId"] = new SelectList(_context.Origins, "OriginId", "Country", ad.OriginId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", ad.UserId);
             return View(ad);
         }
+
 
         // GET: Ad/Delete/5
         public async Task<IActionResult> Delete(int? id)

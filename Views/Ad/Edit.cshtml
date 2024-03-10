@@ -4,6 +4,14 @@
     ViewData["Title"] = "Edit";
 }
 
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    var isUserAdmin = User.IsInRole("Admin");
+}
+
 <h1>Edit</h1>
 
 <h4>Ad</h4>
@@ -30,7 +38,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="BirthYear" class="control-label"></label>
-                <input asp-for="BirthYear" class="form-control" type="number"/>
+                <input asp-for="BirthYear" class="form-control" type="number" />
                 <span asp-validation-for="BirthYear" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -48,11 +56,15 @@
                 <select asp-for="Gender" class="form-control" asp-items="Html.GetEnumSelectList<Gender>()"></select>
                 <span asp-validation-for="Gender" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsApproved" /> @Html.DisplayNameFor(model => model.IsApproved)
-                </label>
-            </div>
+            @if (isUserAdmin)
+            {
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="IsApproved" /> @Html.DisplayNameFor(model =>
+                    model.IsApproved)
+                    </label>
+                </div>
+            }
             <div class="form-group">
                 <label asp-for="BreedId" class="control-label"></label>
                 <select asp-for="BreedId" class="form-control" asp-items="ViewBag.BreedId"></select>
@@ -85,5 +97,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
