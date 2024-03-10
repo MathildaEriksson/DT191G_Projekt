@@ -98,6 +98,11 @@ namespace EquiMarketApp.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            //Custom fields
+            [StringLength(100, ErrorMessage = "Namnet får inte vara längre än 100 tecken.")]
+            [Display(Name = "Name")]
+            public string Name { get; set; }
         }
 
 
@@ -159,7 +164,12 @@ namespace EquiMarketApp.Areas.Identity.Pages.Account
         {
             try
             {
-                return Activator.CreateInstance<ApplicationUser>();
+                var user = Activator.CreateInstance<ApplicationUser>();
+
+                //Custom fields
+                user.Name = Input.Name;
+
+                return user;
             }
             catch
             {

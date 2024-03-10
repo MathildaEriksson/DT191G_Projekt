@@ -59,18 +59,25 @@ namespace EquiMarketApp.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            //Custom fields
+            [StringLength(100, ErrorMessage = "Namnet får inte vara längre än 100 tecken.")]
+            [Display(Name = "Name")]
+            public string Name { get; set; }
         }
 
         private async Task LoadAsync(ApplicationUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            var name = user.Name;
 
             Username = userName;
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                Name = name
             };
         }
 
@@ -98,6 +105,17 @@ namespace EquiMarketApp.Areas.Identity.Pages.Account.Manage
             {
                 await LoadAsync(user);
                 return Page();
+            }
+
+            if (Input.Name != user.Name)
+            {
+                user.Name = Input.Name;
+                var updateResult = await _userManager.UpdateAsync(user);
+                if (!updateResult.Succeeded)
+                {
+                    StatusMessage = "Unexpected error when trying to set name.";
+                    return RedirectToPage();
+                }
             }
 
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
