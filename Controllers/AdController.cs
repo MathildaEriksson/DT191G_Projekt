@@ -14,11 +14,11 @@ namespace EquiMarketApp.Controllers
 {
     public class AdController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         private readonly ApplicationDbContext _context;
 
-        public AdController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public AdController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -132,7 +132,7 @@ namespace EquiMarketApp.Controllers
                 {
                     if (ad.UserId != _userManager.GetUserId(User) && !User.IsInRole("Admin"))
                     {
-                        return Forbid(); 
+                        return Forbid();
                     }
 
                     _context.Update(ad);
@@ -177,6 +177,11 @@ namespace EquiMarketApp.Controllers
             if (ad == null)
             {
                 return NotFound();
+            }
+
+            if (ad.UserId != _userManager.GetUserId(User) && !User.IsInRole("Admin"))
+            {
+                return Forbid();
             }
 
             return View(ad);

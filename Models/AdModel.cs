@@ -64,5 +64,5 @@ public class Ad
     public int CityId { get; set; }
     public City? Location { get; set; }
 
-    public IdentityUser? User { get; set; }
+    public ApplicationUser? User { get; set; }
 }

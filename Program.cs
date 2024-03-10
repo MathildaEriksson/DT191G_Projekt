@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using EquiMarketApp.Data;
+using EquiMarketApp;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +11,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>() // Make sure roles are supported
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
@@ -28,7 +29,7 @@ using (var scope = app.Services.CreateScope())
         await roleManager.CreateAsync(new IdentityRole("Admin"));
     }
 
-    var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
     var user = await userManager.FindByEmailAsync("maer1200@student.miun.se");
     if (user != null && !await userManager.IsInRoleAsync(user, "Admin"))
     {
