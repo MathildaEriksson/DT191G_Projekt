@@ -25,21 +25,38 @@ namespace EquiMarketApp.Controllers
         }
 
         // GET: Ad
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 10)
         {
+            IQueryable<Ad> adsQuery;
             if (User.IsInRole("Admin"))
             {
                 // Admin can see all ads
-                var allAds = _context.Ads.Include(a => a.AdType).Include(a => a.Breed).Include(a => a.Location).Include(a => a.Origin).Include(a => a.User);
-                return View(await allAds.ToListAsync());
+                adsQuery = _context.Ads.Include(a => a.AdType).Include(a => a.Breed).Include(a => a.Location).Include(a => a.Origin).Include(a => a.User);
             }
             else
             {
                 // Regular user can only see their own ads
                 var userId = _userManager.GetUserId(User);
-                var userAds = _context.Ads.Where(a => a.UserId == userId).Include(a => a.AdType).Include(a => a.Breed).Include(a => a.Location).Include(a => a.Origin).Include(a => a.User);
-                return View(await userAds.ToListAsync());
+                adsQuery = _context.Ads.Where(a => a.UserId == userId).Include(a => a.AdType).Include(a => a.Breed).Include(a => a.Location).Include(a => a.Origin).Include(a => a.User);
             }
+
+            return View(await PaginatedList<Ad>.CreateAsync(adsQuery.AsNoTracking(), pageNumber, pageSize));
+        }
+
+        // GET: Approved ads
+        public async Task<IActionResult> ApprovedAds(int pageNumber = 1, int pageSize = 10)
+        {
+            var approvedAdsQuery = _context.Ads.Where(a => a.IsApproved)
+                                                .Include(a => a.AdType)
+                                                .Include(a => a.Breed)
+                                                .Include(a => a.Location)
+                                                .Include(a => a.Origin)
+                                                .Include(a => a.User)
+                                                .AsNoTracking();
+
+            var approvedAds = await PaginatedList<Ad>.CreateAsync(approvedAdsQuery, pageNumber, pageSize);
+
+            return View(approvedAds);
         }
 
         // GET: Ad/Details/5

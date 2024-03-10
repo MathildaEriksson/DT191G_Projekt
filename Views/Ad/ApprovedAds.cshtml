@@ -1,0 +1,45 @@
+@model PaginatedList<EquiMarketApp.Models.Ad>
+
+@{
+    ViewData["Title"] = "'Annonser'";
+}
+
+<h2>Annonser</h2>
+
+<table class="table">
+    <thead> @* TODO: Lägg till allt som ska visas här, inklusive länk till annonsens egen sida *@
+        <tr>
+            <th>@Html.DisplayNameFor(model => model[0].Title)</th>
+            <th>@Html.DisplayNameFor(model => model[0].Description)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                <td>@Html.DisplayFor(modelItem => item.Description)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@* Paginering *@
+@if (Model.HasPreviousPage)
+{
+    <a asp-action="ApprovedAds" asp-route-pageNumber="@(Model.PageIndex - 1)"
+        asp-route-pageSize="@Model.PageSize">Föregående</a>
+}
+else
+{
+    <span>Föregående</span>
+}
+
+@if (Model.HasNextPage)
+{
+    <a asp-action="ApprovedAds" asp-route-pageNumber="@(Model.PageIndex + 1)" asp-route-pageSize="@Model.PageSize">Nästa</a>
+}
+else
+{
+    <span>Nästa</span>
+}

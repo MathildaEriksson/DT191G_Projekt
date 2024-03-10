@@ -1,4 +1,4 @@
-@model IEnumerable<EquiMarketApp.Models.Ad>
+@model PaginatedList<EquiMarketApp.Models.Ad>
 
 @{
     ViewData["Title"] = "Index";
@@ -12,7 +12,6 @@
     var isUserAdmin = User.IsInRole("Admin");
 }
 
-
 <h1>Index</h1>
 
 <p>
@@ -22,49 +21,49 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                @Html.DisplayNameFor(modelItem => modelItem.FirstOrDefault().Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(modelItem => modelItem.FirstOrDefault().Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                @Html.DisplayNameFor(modelItem => modelItem.FirstOrDefault().Price)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CreatedAt)
+                @Html.DisplayNameFor(modelItem => modelItem.FirstOrDefault().CreatedAt)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BirthYear)
+                @Html.DisplayNameFor(modelItem => modelItem.FirstOrDefault().BirthYear)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Height)
+                @Html.DisplayNameFor(modelItem => modelItem.FirstOrDefault().Height)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(modelItem => modelItem.FirstOrDefault().Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Gender)
+                @Html.DisplayNameFor(modelItem => modelItem.FirstOrDefault().Gender)
             </th>
             @if (isUserAdmin)
             {
                 <th>
-                    @Html.DisplayNameFor(model => model.IsApproved)
+                    @Html.DisplayNameFor(modelItem => modelItem.FirstOrDefault().IsApproved)
                 </th>
             }
             <th>
-                @Html.DisplayNameFor(model => model.Breed)
+                @Html.DisplayNameFor(modelItem => modelItem.FirstOrDefault().Breed.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Origin)
+                @Html.DisplayNameFor(modelItem => modelItem.FirstOrDefault().Origin.Country)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AdType)
+                @Html.DisplayNameFor(modelItem => modelItem.FirstOrDefault().AdType.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Location)
+                @Html.DisplayNameFor(modelItem => modelItem.FirstOrDefault().Location.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User)
+                @Html.DisplayNameFor(modelItem => modelItem.FirstOrDefault().User.Id)
             </th>
             <th></th>
         </tr>
@@ -127,3 +126,21 @@
         }
     </tbody>
 </table>
+@* Paginering *@
+@if (Model.HasPreviousPage)
+{
+    <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex - 1)" asp-route-pageSize="@Model.PageSize">Föregående</a>
+}
+else
+{
+    <span>Föregående</span>
+}
+
+@if (Model.HasNextPage)
+{
+    <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex + 1)" asp-route-pageSize="@Model.PageSize">Nästa</a>
+}
+else
+{
+    <span>Nästa</span>
+}
