@@ -278,15 +278,34 @@ namespace EquiMarketApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var ad = await _context.Ads.FindAsync(id);
+            var ad = await _context.Ads
+                .Include(a => a.Images)
+                .FirstOrDefaultAsync(a => a.AdId == id);
+
             if (ad != null)
             {
+                // Check if ad has images and delete them
+                if (ad.Images != null && ad.Images.Any())
+                {
+                    foreach (var image in ad.Images)
+                    {
+                        var imagePath = Path.Combine(_hostingEnvironment.WebRootPath, image.ImagePath);
+                        if (System.IO.File.Exists(imagePath))
+                        {
+                            System.IO.File.Delete(imagePath);
+                        }
+
+                        _context.Images.Remove(image);
+                    }
+                }
+
                 _context.Ads.Remove(ad);
+                await _context.SaveChangesAsync();
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
 
         private bool AdExists(int id)
         {
