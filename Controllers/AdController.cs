@@ -35,13 +35,13 @@ namespace EquiMarketApp.Controllers
             if (User.IsInRole("Admin"))
             {
                 // Admin can see all ads
-                adsQuery = _context.Ads.Include(a => a.AdType).Include(a => a.Breed).Include(a => a.Location).Include(a => a.Origin).Include(a => a.User);
+                adsQuery = _context.Ads.Include(a => a.AdType).Include(a => a.Breed).Include(a => a.Location).Include(a => a.Origin).Include(a => a.User).Include(a => a.Images);
             }
             else
             {
                 // Regular user can only see their own ads
                 var userId = _userManager.GetUserId(User);
-                adsQuery = _context.Ads.Where(a => a.UserId == userId).Include(a => a.AdType).Include(a => a.Breed).Include(a => a.Location).Include(a => a.Origin).Include(a => a.User);
+                adsQuery = _context.Ads.Where(a => a.UserId == userId).Include(a => a.AdType).Include(a => a.Breed).Include(a => a.Location).Include(a => a.Origin).Include(a => a.User).Include(a => a.Images);
             }
 
             return View(await PaginatedList<Ad>.CreateAsync(adsQuery.AsNoTracking(), pageNumber, pageSize));
@@ -133,7 +133,7 @@ namespace EquiMarketApp.Controllers
 
                         var imageRecord = new Image
                         {
-                            ImagePath = "images/ads/" + uniqueFileName, // Save the file path to the database
+                            ImagePath = "images/ads/" + uniqueFileName,
                             AdId = ad.AdId
                         };
                         _context.Images.Add(imageRecord);
@@ -170,7 +170,15 @@ namespace EquiMarketApp.Controllers
                 return NotFound();
             }
 
-            var ad = await _context.Ads.FindAsync(id);
+            var ad = await _context.Ads
+                .Include(a => a.Images)
+                .Include(a => a.AdType)
+                .Include(a => a.Breed)
+                .Include(a => a.Location)
+                .Include(a => a.Origin)
+                .Include(a => a.User)
+                .FirstOrDefaultAsync(m => m.AdId == id);
+
             if (ad == null)
             {
                 return NotFound();
@@ -194,7 +202,7 @@ namespace EquiMarketApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AdId,Title,Description,Price,BirthYear,Height,Name,Gender,IsApproved,BreedId,OriginId,AdTypeId,CityId")] Ad ad)
+        public async Task<IActionResult> Edit(int id, [Bind("AdId,Title,Description,Price,BirthYear,Height,Name,Gender,IsApproved,BreedId,OriginId,AdTypeId,CityId")] Ad ad, List<IFormFile> newImages)
         {
             if (id != ad.AdId)
             {
@@ -211,13 +219,31 @@ namespace EquiMarketApp.Controllers
             {
                 try
                 {
-                    // Keep current userID
+                    // Keep current userID and images
                     ad.UserId = existingAd.UserId;
+                    ad.Images = existingAd.Images;
 
                     // Check if user is owner of ad or admin
                     if (ad.UserId != _userManager.GetUserId(User) && !User.IsInRole("Admin"))
                     {
                         return Forbid();
+                    }
+
+                    if (newImages != null && newImages.Count > 0)
+                    {
+                        foreach (var image in newImages)
+                        {
+                            var uniqueFileName = GetUniqueFileName(image.FileName);
+                            var uploadsFolder = Path.Combine(wwwRootPath, "images/ads");
+                            var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                            using (var fileStream = new FileStream(filePath, FileMode.Create))
+                            {
+                                await image.CopyToAsync(fileStream);
+                            }
+
+                            ad.Images.Add(new Image { ImagePath = "images/ads/" + uniqueFileName });
+                        }
                     }
 
                     _context.Update(ad);
@@ -243,7 +269,6 @@ namespace EquiMarketApp.Controllers
             ViewData["OriginId"] = new SelectList(_context.Origins, "OriginId", "Country", ad.OriginId);
             return View(ad);
         }
-
 
         // GET: Ad/Delete/5
         public async Task<IActionResult> Delete(int? id)
