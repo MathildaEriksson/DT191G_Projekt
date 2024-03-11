@@ -95,6 +95,7 @@ namespace EquiMarketApp.Controllers
             ViewData["CityId"] = new SelectList(_context.Cities, "CityId", "Name");
             ViewData["OriginId"] = new SelectList(_context.Origins, "OriginId", "Country");
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewBag.CountyId = new SelectList(_context.Counties.OrderBy(c => c.Name), "CountyId", "Name");
             return View();
         }
 
@@ -175,6 +176,7 @@ namespace EquiMarketApp.Controllers
                 .Include(a => a.AdType)
                 .Include(a => a.Breed)
                 .Include(a => a.Location)
+                .ThenInclude(l => l.County)
                 .Include(a => a.Origin)
                 .Include(a => a.User)
                 .FirstOrDefaultAsync(m => m.AdId == id);
@@ -191,9 +193,10 @@ namespace EquiMarketApp.Controllers
 
             ViewData["AdTypeId"] = new SelectList(_context.AdTypes, "AdTypeId", "Name", ad.AdTypeId);
             ViewData["BreedId"] = new SelectList(_context.Breeds, "BreedId", "Name", ad.BreedId);
-            ViewData["CityId"] = new SelectList(_context.Cities, "CityId", "Name", ad.CityId);
+            ViewData["CityId"] = new SelectList(_context.Cities.Where(c => c.CountyId == ad.Location.CountyId), "CityId", "Name", ad.CityId);
             ViewData["OriginId"] = new SelectList(_context.Origins, "OriginId", "Country", ad.OriginId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", ad.UserId);
+            ViewBag.CountyId = new SelectList(_context.Counties.OrderBy(c => c.Name), "CountyId", "Name", ad.Location.CountyId);
+
             return View(ad);
         }
 
@@ -351,6 +354,16 @@ namespace EquiMarketApp.Controllers
             }
 
             return RedirectToAction(nameof(Edit), new { id = adId });
+        }
+
+        public async Task<IActionResult> GetCitiesByCountyId(int countyId)
+        {
+            var cities = await _context.Cities
+                .Where(c => c.CountyId == countyId)
+                .Select(c => new { c.CityId, c.Name })
+                .ToListAsync();
+
+            return Json(cities);
         }
 
         private bool AdExists(int id)

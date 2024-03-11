@@ -77,8 +77,17 @@
                 <select asp-for="AdTypeId" class="form-control" asp-items="ViewBag.AdTypeId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="CityId" class="control-label"></label>
-                <select asp-for="CityId" class="form-control" asp-items="ViewBag.CityId"></select>
+                <label asp-for="Location.CountyId" class="control-label">County</label>
+                <select asp-for="Location.CountyId" class="form-control" asp-items="ViewBag.CountyId"
+                    id="countyDropdown">
+                    <option value="">Välj ett län</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="CityId" class="control-label">City</label>
+                <select asp-for="CityId" class="form-control" id="cityDropdown">
+                    <option value="">Välj en stad</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="images">Bilder</label>
@@ -99,4 +108,26 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
+    <script>
+        // Fetches cities based on the selected county and populates the city dropdown dynamically
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelector('#countyDropdown').addEventListener('change', function () {
+                var countyId = this.value;
+                var url = '@Url.Action("GetCitiesByCountyId", "Ad")';
+
+                fetch(url + '?countyId=' + countyId)
+                    .then(response => response.json())
+                    .then(data => {
+                        var citySelect = document.querySelector('#cityDropdown');
+                        citySelect.innerHTML = '<option value="">Select a city</option>';
+
+                        data.forEach(function (city) {
+                            var option = new Option(city.name, city.cityId);
+                            citySelect.add(option);
+                        });
+                    });
+            });
+        });
+    </script>
 }
