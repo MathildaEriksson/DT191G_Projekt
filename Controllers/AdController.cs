@@ -17,11 +17,15 @@ namespace EquiMarketApp.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
 
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _hostingEnvironment;
+        private readonly string wwwRootPath;
 
-        public AdController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public AdController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IWebHostEnvironment hostingEnvironment)
         {
             _context = context;
             _userManager = userManager;
+            _hostingEnvironment = hostingEnvironment;
+            wwwRootPath = hostingEnvironment.WebRootPath;
         }
 
         // GET: Ad
@@ -52,6 +56,7 @@ namespace EquiMarketApp.Controllers
                                                 .Include(a => a.Location)
                                                 .Include(a => a.Origin)
                                                 .Include(a => a.User)
+                                                .Include(a => a.Images)
                                                 .AsNoTracking();
 
             var approvedAds = await PaginatedList<Ad>.CreateAsync(approvedAdsQuery, pageNumber, pageSize);
@@ -99,7 +104,7 @@ namespace EquiMarketApp.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AdId,Title,Description,Price,BirthYear,Height,Name,Gender,IsApproved,BreedId,OriginId,AdTypeId,CityId")] Ad ad)
+        public async Task<IActionResult> Create([Bind("Title,Description,Price,BirthYear,Height,Name,Gender,IsApproved,BreedId,OriginId,AdTypeId,CityId")] Ad ad, List<IFormFile> images)
         {
             if (ModelState.IsValid)
             {
@@ -111,14 +116,50 @@ namespace EquiMarketApp.Controllers
 
                 _context.Add(ad);
                 await _context.SaveChangesAsync();
+
+                // If there are images, save them to the database
+                if (images != null)
+                {
+                    foreach (var image in images)
+                    {
+                        var uniqueFileName = GetUniqueFileName(image.FileName);
+                        var uploadsFolder = Path.Combine(wwwRootPath, "images/ads");
+                        var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await image.CopyToAsync(fileStream);
+                        }
+
+                        var imageRecord = new Image
+                        {
+                            ImagePath = "images/ads/" + uniqueFileName, // Save the file path to the database
+                            AdId = ad.AdId
+                        };
+                        _context.Images.Add(imageRecord);
+                    }
+
+                    await _context.SaveChangesAsync();
+                }
+
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["AdTypeId"] = new SelectList(_context.AdTypes, "AdTypeId", "Name", ad.AdTypeId);
             ViewData["BreedId"] = new SelectList(_context.Breeds, "BreedId", "Name", ad.BreedId);
             ViewData["CityId"] = new SelectList(_context.Cities, "CityId", "Name", ad.CityId);
             ViewData["OriginId"] = new SelectList(_context.Origins, "OriginId", "Country", ad.OriginId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", ad.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
             return View(ad);
+        }
+
+        private string GetUniqueFileName(string fileName)
+        {
+            fileName = Path.GetFileName(fileName);
+            return Path.GetFileNameWithoutExtension(fileName)
+                   + "_"
+                   + Guid.NewGuid().ToString().Substring(0, 4)
+                   + Path.GetExtension(fileName);
         }
 
         // GET: Ad/Edit/5

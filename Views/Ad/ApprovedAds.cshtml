@@ -11,6 +11,8 @@
         <tr>
             <th>@Html.DisplayNameFor(model => model[0].Title)</th>
             <th>@Html.DisplayNameFor(model => model[0].Description)</th>
+            <th>@Html.DisplayNameFor(model => model[0].Price)</th>
+            <th>Bild</th>
         </tr>
     </thead>
     <tbody>
@@ -19,6 +21,20 @@
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.Title)</td>
                 <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                <td>
+                    @if (item.Images != null && item.Images.Any())
+                    {
+                        foreach (var image in item.Images)
+                        {
+                            <img src="@Url.Content("~/" + image.ImagePath)" alt="Bild" style="width: 150px; height: auto;" />
+                        }
+                    }
+                    else
+                    {
+                        <p>Inga bilder tillgängliga</p>
+                    }
+                </td>
             </tr>
         }
     </tbody>
