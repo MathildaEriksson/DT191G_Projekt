@@ -331,6 +331,27 @@ namespace EquiMarketApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // Delete image from ad
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteImage(int imageId, int adId)
+        {
+            var image = await _context.Images.FindAsync(imageId);
+
+            if (image != null)
+            {
+                var imagePath = Path.Combine(_hostingEnvironment.WebRootPath, image.ImagePath);
+                if (System.IO.File.Exists(imagePath))
+                {
+                    System.IO.File.Delete(imagePath);
+                }
+
+                _context.Images.Remove(image);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction(nameof(Edit), new { id = adId });
+        }
 
         private bool AdExists(int id)
         {
