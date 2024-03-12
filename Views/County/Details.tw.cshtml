@@ -1,0 +1,24 @@
+@model EquiMarketApp.Models.County
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>County</h4>
+    <hr />
+    <dl class="flex flex-wrap ">
+        <dt class = "sm:w-1/5 pr-4 pl-4">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "sm:w-4/5 pr-4 pl-4">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.CountyId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
