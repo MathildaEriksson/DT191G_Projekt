@@ -64,6 +64,24 @@ namespace EquiMarketApp.Controllers
             return View(approvedAds);
         }
 
+        // GET: Unapproved ads
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> NonApprovedAds(int pageNumber = 1, int pageSize = 10)
+        {
+            var nonApprovedAdsQuery = _context.Ads.Where(a => !a.IsApproved)
+                                                   .Include(a => a.AdType)
+                                                   .Include(a => a.Breed)
+                                                   .Include(a => a.Location)
+                                                   .Include(a => a.Origin)
+                                                   .Include(a => a.User)
+                                                   .Include(a => a.Images)
+                                                   .AsNoTracking();
+
+            var nonApprovedAds = await PaginatedList<Ad>.CreateAsync(nonApprovedAdsQuery, pageNumber, pageSize);
+
+            return View(nonApprovedAds);
+        }
+
         // GET: Ad/Details/5
         public async Task<IActionResult> Details(int? id)
         {
