@@ -20,7 +20,9 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                <td>
+                    <a href="@Url.Action("Details", "Ad", new { id = item.AdId, returnUrl = Context.Request.Path })">@Html.DisplayFor(modelItem => item.Title)</a>
+                </td>
                 <td>@Html.DisplayFor(modelItem => item.Description)</td>
                 <td>@Html.DisplayFor(modelItem => item.Price)</td>
                 <td>
