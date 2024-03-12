@@ -48,9 +48,14 @@ namespace EquiMarketApp.Controllers
         }
 
         // GET: Approved ads
-        public async Task<IActionResult> ApprovedAds(int? adTypeId, int? breedId, Gender? gender, int? originId, int? minPrice, int? maxPrice, int? minHeight, int? maxHeight, int? minBirthyear, int? maxBirthyear, int? countyId, int pageNumber = 1, int pageSize = 10)
+        public async Task<IActionResult> ApprovedAds(string searchString, int? adTypeId, int? breedId, Gender? gender, int? originId, int? minPrice, int? maxPrice, int? minHeight, int? maxHeight, int? minBirthyear, int? maxBirthyear, int? countyId, int pageNumber = 1, int pageSize = 10)
         {
             var approvedAdsQuery = _context.Ads.Where(a => a.IsApproved);
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                approvedAdsQuery = approvedAdsQuery.Where(a => a.Title.Contains(searchString) || a.Description.Contains(searchString));
+            }
 
             if (adTypeId.HasValue)
             {
@@ -118,12 +123,20 @@ namespace EquiMarketApp.Controllers
             ViewBag.AdTypeId = new SelectList(_context.AdTypes, "AdTypeId", "Name", adTypeId);
             ViewBag.BreedId = new SelectList(_context.Breeds, "BreedId", "Name", breedId);
             ViewBag.OriginId = new SelectList(_context.Origins, "OriginId", "Country", originId);
-            ViewBag.CountyId = new SelectList(_context.Counties, "CountyId", "Name");
+            ViewBag.CountyId = new SelectList(_context.Counties, "CountyId", "Name", countyId);
             ViewBag.Gender = new SelectList(Enum.GetValues(typeof(Gender)).Cast<Gender>().Select(v => new SelectListItem
             {
                 Text = v.ToString(),
                 Value = ((int)v).ToString()
             }).ToList(), "Value", "Text");
+
+            ViewBag.CurrentSearchString = searchString;
+            ViewBag.minPrice = minPrice;
+            ViewBag.maxPrice = maxPrice;
+            ViewBag.minBirthyear = minBirthyear;
+            ViewBag.maxBirthyear = maxBirthyear;
+            ViewBag.minHeight = minHeight;
+            ViewBag.maxHeight = maxHeight;
 
             var approvedAds = await PaginatedList<Ad>.CreateAsync(approvedAdsQuery, pageNumber, pageSize);
 

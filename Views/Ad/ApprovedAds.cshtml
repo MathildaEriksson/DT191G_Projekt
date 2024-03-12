@@ -14,6 +14,11 @@
         </select>
     </div>
     <div class="form-group">
+        <label for="searchString">Sök:</label>
+        <input type="search" name="searchString" id="searchString" class="form-control"
+            placeholder="Sök i titel och beskrivning" value="@ViewBag.CurrentSearchString" />
+    </div>
+    <div class="form-group">
         <label for="countyId">Län:</label>
         <select name="countyId" id="countyId" asp-items="ViewBag.CountyId" class="form-control">
             <option value="">Alla</option>
@@ -22,21 +27,25 @@
     <div class="form-row">
         <div class="col">
             <label for="minPrice">Pris från:</label>
-            <input type="number" name="minPrice" id="minPrice" class="form-control" placeholder="Min" step="1">
+            <input type="number" name="minPrice" id="minPrice" class="form-control" placeholder="Min"
+                value="@ViewBag.minPrice" step="1">
         </div>
         <div class="col">
             <label for="maxPrice">Pris till:</label>
-            <input type="number" name="maxPrice" id="maxPrice" class="form-control" placeholder="Max" step="1">
+            <input type="number" name="maxPrice" id="maxPrice" class="form-control" placeholder="Max"
+                value="@ViewBag.maxPrice" step="1">
         </div>
     </div>
     <div class="form-row">
         <div class="col">
             <label for="minHeight">Mankhöjd från:</label>
-            <input type="number" name="minHeight" id="minHeight" class="form-control" placeholder="Min" step="1">
+            <input type="number" name="minHeight" id="minHeight" class="form-control" placeholder="Min"
+                value="@ViewBag.minHeight" step="1">
         </div>
         <div class="col">
             <label for="maxHeight">Mankhöjd till:</label>
-            <input type="number" name="maxHeight" id="maxHeight" class="form-control" placeholder="Max" step="1">
+            <input type="number" name="maxHeight" id="maxHeight" class="form-control" placeholder="Max"
+                value="@ViewBag.maxHeight" step="1">
         </div>
     </div>
     <div class="form-group">
@@ -48,11 +57,13 @@
     <div class="form-row">
         <div class="col">
             <label for="minBirthyear">Född från år:</label>
-            <input type="number" name="minBirthyear" id="minBirthyear" class="form-control" placeholder="Min" step="1">
+            <input type="number" name="minBirthyear" id="minBirthyear" class="form-control" placeholder="Min"
+                value="@ViewBag.minBirthyear" step="1">
         </div>
         <div class="col">
             <label for="maxBirthyear">Född till år:</label>
-            <input type="number" name="maxBirthyear" id="maxBirthyear" class="form-control" placeholder="Max" step="1">
+            <input type="number" name="maxBirthyear" id="maxBirthyear" class="form-control" placeholder="Max"
+                value="@ViewBag.maxBirthyear" step="1">
         </div>
     </div>
     <div class="form-group">
@@ -70,7 +81,8 @@
         </select>
     </div>
 
-    <button type="submit" class="btn btn-primary">Filter</button>
+    <button type="submit" class="btn btn-primary">Filtrera</button>
+    <a href="@Url.Action("ApprovedAds", "Ad")" class="btn btn-secondary">Töm filter</a>
 </form>
 
 <table class="table">
