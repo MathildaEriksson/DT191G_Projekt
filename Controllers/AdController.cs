@@ -48,16 +48,82 @@ namespace EquiMarketApp.Controllers
         }
 
         // GET: Approved ads
-        public async Task<IActionResult> ApprovedAds(int pageNumber = 1, int pageSize = 10)
+        public async Task<IActionResult> ApprovedAds(int? adTypeId, int? breedId, Gender? gender, int? originId, int? minPrice, int? maxPrice, int? minHeight, int? maxHeight, int? minBirthyear, int? maxBirthyear, int? countyId, int pageNumber = 1, int pageSize = 10)
         {
-            var approvedAdsQuery = _context.Ads.Where(a => a.IsApproved)
-                                                .Include(a => a.AdType)
-                                                .Include(a => a.Breed)
-                                                .Include(a => a.Location)
-                                                .Include(a => a.Origin)
-                                                .Include(a => a.User)
-                                                .Include(a => a.Images)
-                                                .AsNoTracking();
+            var approvedAdsQuery = _context.Ads.Where(a => a.IsApproved);
+
+            if (adTypeId.HasValue)
+            {
+                approvedAdsQuery = approvedAdsQuery.Where(a => a.AdTypeId == adTypeId.Value);
+            }
+
+            if (breedId.HasValue)
+            {
+                approvedAdsQuery = approvedAdsQuery.Where(a => a.BreedId == breedId.Value);
+            }
+
+            if (gender.HasValue)
+            {
+                approvedAdsQuery = approvedAdsQuery.Where(a => a.Gender == gender.Value);
+            }
+
+            if (originId.HasValue)
+            {
+                approvedAdsQuery = approvedAdsQuery.Where(a => a.OriginId == originId.Value);
+            }
+
+            if (minPrice.HasValue)
+            {
+                approvedAdsQuery = approvedAdsQuery.Where(a => a.Price >= minPrice.Value);
+            }
+
+            if (maxPrice.HasValue)
+            {
+                approvedAdsQuery = approvedAdsQuery.Where(a => a.Price <= maxPrice.Value);
+            }
+
+            if (minHeight.HasValue)
+            {
+                approvedAdsQuery = approvedAdsQuery.Where(a => a.Height >= minHeight.Value);
+            }
+
+            if (maxHeight.HasValue)
+            {
+                approvedAdsQuery = approvedAdsQuery.Where(a => a.Height <= maxHeight.Value);
+            }
+
+            if (countyId.HasValue)
+            {
+                approvedAdsQuery = approvedAdsQuery.Where(a => a.Location.CountyId == countyId.Value);
+            }
+
+            if (minBirthyear.HasValue)
+            {
+                approvedAdsQuery = approvedAdsQuery.Where(a => a.BirthYear >= minBirthyear.Value);
+            }
+
+            if (maxBirthyear.HasValue)
+            {
+                approvedAdsQuery = approvedAdsQuery.Where(a => a.BirthYear <= maxBirthyear.Value);
+            }
+
+            approvedAdsQuery = approvedAdsQuery
+                      .Include(a => a.AdType)
+                      .Include(a => a.Breed)
+                      .Include(a => a.Location)
+                      .Include(a => a.Origin)
+                      .Include(a => a.User)
+                      .Include(a => a.Images);
+
+            ViewBag.AdTypeId = new SelectList(_context.AdTypes, "AdTypeId", "Name", adTypeId);
+            ViewBag.BreedId = new SelectList(_context.Breeds, "BreedId", "Name", breedId);
+            ViewBag.OriginId = new SelectList(_context.Origins, "OriginId", "Country", originId);
+            ViewBag.CountyId = new SelectList(_context.Counties, "CountyId", "Name");
+            ViewBag.Gender = new SelectList(Enum.GetValues(typeof(Gender)).Cast<Gender>().Select(v => new SelectListItem
+            {
+                Text = v.ToString(),
+                Value = ((int)v).ToString()
+            }).ToList(), "Value", "Text");
 
             var approvedAds = await PaginatedList<Ad>.CreateAsync(approvedAdsQuery, pageNumber, pageSize);
 

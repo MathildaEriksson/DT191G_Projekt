@@ -6,14 +6,88 @@
 }
 
 <h2>Annonser</h2>
+<form method="get" asp-action="ApprovedAds">
+    <div class="form-group">
+        <label for="adTypeId">Annonstyp:</label>
+        <select name="adTypeId" id="adTypeId" asp-items="ViewBag.AdTypeId" class="form-control">
+            <option value="">Alla</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="countyId">Län:</label>
+        <select name="countyId" id="countyId" asp-items="ViewBag.CountyId" class="form-control">
+            <option value="">Alla</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <div class="col">
+            <label for="minPrice">Pris från:</label>
+            <input type="number" name="minPrice" id="minPrice" class="form-control" placeholder="Min" step="1">
+        </div>
+        <div class="col">
+            <label for="maxPrice">Pris till:</label>
+            <input type="number" name="maxPrice" id="maxPrice" class="form-control" placeholder="Max" step="1">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col">
+            <label for="minHeight">Mankhöjd från:</label>
+            <input type="number" name="minHeight" id="minHeight" class="form-control" placeholder="Min" step="1">
+        </div>
+        <div class="col">
+            <label for="maxHeight">Mankhöjd till:</label>
+            <input type="number" name="maxHeight" id="maxHeight" class="form-control" placeholder="Max" step="1">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="breedId">Ras:</label>
+        <select name="breedId" id="breedId" asp-items="ViewBag.BreedId" class="form-control">
+            <option value="">Alla</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <div class="col">
+            <label for="minBirthyear">Född från år:</label>
+            <input type="number" name="minBirthyear" id="minBirthyear" class="form-control" placeholder="Min" step="1">
+        </div>
+        <div class="col">
+            <label for="maxBirthyear">Född till år:</label>
+            <input type="number" name="maxBirthyear" id="maxBirthyear" class="form-control" placeholder="Max" step="1">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="gender">Kön:</label>
+        @Html.DropDownList("gender", (IEnumerable<SelectListItem>)ViewBag.Gender, "Välj kön", new
+            {
+                @class =
+                 "form-control"
+            })
+    </div>
+    <div class="form-group">
+        <label for="originId">Ursprung:</label>
+        <select name="originId" id="originId" asp-items="ViewBag.OriginId" class="form-control">
+            <option value="">Alla</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Filter</button>
+</form>
 
 <table class="table">
-    <thead> @* TODO: Lägg till allt som ska visas här, inklusive länk till annonsens egen sida *@
+    <thead>
         <tr>
             <th>@Html.DisplayNameFor(model => model[0].Title)</th>
             <th>@Html.DisplayNameFor(model => model[0].Description)</th>
             <th>@Html.DisplayNameFor(model => model[0].Price)</th>
-            <th>Bild</th>
+            <th>@Html.DisplayNameFor(model => model[0].CreatedAt)</th>
+            <th>@Html.DisplayNameFor(model => model[0].BirthYear)</th>
+            <th>@Html.DisplayNameFor(model => model[0].Height)</th>
+            <th>@Html.DisplayNameFor(model => model[0].Name)</th>
+            <th>@Html.DisplayNameFor(model => model[0].Gender)</th>
+            <th>@Html.DisplayNameFor(model => model[0].Breed.Name)</th>
+            <th>@Html.DisplayNameFor(model => model[0].Location.Name)</th>
+            <th>@Html.DisplayNameFor(model => model[0].Origin)</th>
+            <th>Bild/er</th>
         </tr>
     </thead>
     <tbody>
@@ -21,16 +95,26 @@
         {
             <tr>
                 <td>
-                    <a href="@Url.Action("Details", "Ad", new { id = item.AdId, returnUrl = Context.Request.Path })">@Html.DisplayFor(modelItem => item.Title)</a>
+                    <a href="@Url.Action("Details", "Ad", new { id = item.AdId, returnUrl = Context.Request.Path })">@Html.DisplayFor(modelItem
+                    => item.Title)</a>
                 </td>
                 <td>@Html.DisplayFor(modelItem => item.Description)</td>
                 <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                <td>@Html.DisplayFor(modelItem => item.CreatedAt)</td>
+                <td>@Html.DisplayFor(modelItem => item.BirthYear)</td>
+                <td>@Html.DisplayFor(modelItem => item.Height)</td>
+                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.Gender)</td>
+                <td>@Html.DisplayFor(modelItem => item.Breed.Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.Location.Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.Origin.Country)</td>
                 <td>
                     @if (item.Images != null && item.Images.Any())
                     {
                         foreach (var image in item.Images)
                         {
-                            <img src="@Url.Content("~/" + image.ImagePath)" alt="Bild på annonsobjekt" style="width: 150px; height: auto;" />
+                            <img src="@Url.Content("~/" + image.ImagePath)" alt="Bild på annonsobjekt"
+                                style="width: 150px; height: auto;" />
                         }
                     }
                     else
