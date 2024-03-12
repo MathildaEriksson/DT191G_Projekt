@@ -22,7 +22,7 @@
         </li>
         <li>
             <p>Scan the QR Code or enter this key <kbd>@Model.SharedKey</kbd> into your two factor authenticator app. Spaces and casing do not matter.</p>
-            <div class="alert alert-info">Learn how to <a href="https://go.microsoft.com/fwlink/?Linkid=852423">enable QR code generation</a>.</div>
+            <div class="relative px-3 py-3 mb-4 border rounded bg-teal-200 border-teal-300 text-teal-800">Learn how to <a href="https://go.microsoft.com/fwlink/?Linkid=852423">enable QR code generation</a>.</div>
             <div id="qrCode"></div>
             <div id="qrCodeData" data-url="@Model.AuthenticatorUri"></div>
         </li>
@@ -31,16 +31,16 @@
                 Once you have scanned the QR code or input the key above, your two factor authentication app will provide you
                 with a unique code. Enter the code in the confirmation box below.
             </p>
-            <div class="row">
-                <div class="col-md-6">
+            <div class="flex flex-wrap ">
+                <div class="md:w-1/2 pr-4 pl-4">
                     <form id="send-code" method="post">
                         <div class="form-floating mb-3">
-                            <input asp-for="Input.Code" class="form-control" autocomplete="off" placeholder="Please enter the code."/>
+                            <input asp-for="Input.Code" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" autocomplete="off" placeholder="Please enter the code."/>
                             <label asp-for="Input.Code" class="control-label form-label">Verification Code</label>
-                            <span asp-validation-for="Input.Code" class="text-danger"></span>
+                            <span asp-validation-for="Input.Code" class="text-red-600"></span>
                         </div>
-                        <button type="submit" class="w-100 btn btn-lg btn-primary">Verify</button>
-                        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                        <button type="submit" class="w-full inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded  no-underline py-3 px-4 leading-tight text-xl bg-blue-600 text-white hover:bg-blue-600">Verify</button>
+                        <div asp-validation-summary="ModelOnly" class="text-red-600" role="alert"></div>
                     </form>
                 </div>
             </div>

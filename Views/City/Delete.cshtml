@@ -10,24 +10,24 @@
 <div>
     <h4>City</h4>
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
+    <dl class="flex flex-wrap ">
+        <dt class = "sm:w-1/5 pr-4 pl-4">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "sm:w-4/5 pr-4 pl-4">
             @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class = "sm:w-1/5 pr-4 pl-4">
             @Html.DisplayNameFor(model => model.County)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "sm:w-4/5 pr-4 pl-4">
             @Html.DisplayFor(model => model.County.Name)
         </dd>
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="CityId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <input type="submit" value="Delete" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-red-600 text-white hover:bg-red-700" /> |
         <a asp-action="Index">Back to List</a>
     </form>
 </div>

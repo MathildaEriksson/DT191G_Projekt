@@ -23,14 +23,14 @@
 <body>
     <header>
         <nav class="relative flex flex-wrap items-center content-between py-3 px-4  navbar-toggleable-sm text-black bg-white border-b box-shadow mb-3">
-            <div class="container mx-auto sm:px-4 max-w-full">
+            <div class="container mx-auto sm:px-4 mx-auto sm:px-4 mx-auto sm:px-4 max-w-full">
                 <a class="inline-block pt-1 pb-1 mr-4 text-lg whitespace-no-wrap" asp-area="" asp-controller="Home" asp-action="Index">EquiMarketApp</a>
                 <button class="py-1 px-2 text-md leading-normal bg-transparent border border-transparent rounded" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="px-5 py-1 border border-gray-600 rounded"></span>
                 </button>
                 <div class="flex-grow items-center hidden sm:inline-flex justify-between">
-                    <ul class="flex flex-wrap list-reset pl-0 mb-0 flex-grow-1">
+                    <ul class="flex flex-wrap list-reset pl-0 mb-0 flex-grow">
                         <li class="">
                             <a class="inline-block py-2 px-4 no-underline text-gray-900" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
@@ -77,14 +77,14 @@
             </div>
         </nav>
     </header>
-    <div class="container mx-auto sm:px-4">
+    <div class="container mx-auto sm:px-4 mx-auto sm:px-4 mx-auto sm:px-4">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
     <footer class="border-t footer text-gray-700">
-        <div class="container mx-auto sm:px-4">
+        <div class="container mx-auto sm:px-4 mx-auto sm:px-4 mx-auto sm:px-4">
             &copy; 2024 - EquiMarketApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>

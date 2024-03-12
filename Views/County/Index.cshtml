@@ -12,12 +12,12 @@
 
 @if (TempData["ErrorMessage"] != null)
 {
-    <div class="alert alert-danger">
+    <div class="relative px-3 py-3 mb-4 border rounded bg-red-200 border-red-300 text-red-800">
         @TempData["ErrorMessage"]
     </div>
 }
 
-<table class="table">
+<table class="w-full max-w-full mb-4 bg-transparent">
     <thead>
         <tr>
             <th>

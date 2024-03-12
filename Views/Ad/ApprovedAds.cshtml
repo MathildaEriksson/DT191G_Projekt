@@ -7,85 +7,85 @@
 
 <h2>Annonser</h2>
 <form method="get" asp-action="ApprovedAds">
-    <div class="form-group">
+    <div class="mb-4">
         <label for="adTypeId">Annonstyp:</label>
-        <select name="adTypeId" id="adTypeId" asp-items="ViewBag.AdTypeId" class="form-control">
+        <select name="adTypeId" id="adTypeId" asp-items="ViewBag.AdTypeId" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded">
             <option value="">Alla</option>
         </select>
     </div>
-    <div class="form-group">
+    <div class="mb-4">
         <label for="searchString">Sök:</label>
-        <input type="search" name="searchString" id="searchString" class="form-control"
+        <input type="search" name="searchString" id="searchString" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded"
             placeholder="Sök i titel och beskrivning" value="@ViewBag.CurrentSearchString" />
     </div>
-    <div class="form-group">
+    <div class="mb-4">
         <label for="countyId">Län:</label>
-        <select name="countyId" id="countyId" asp-items="ViewBag.CountyId" class="form-control">
+        <select name="countyId" id="countyId" asp-items="ViewBag.CountyId" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded">
             <option value="">Alla</option>
         </select>
     </div>
-    <div class="form-row">
-        <div class="col">
+    <div class="flex flex-wrap -mr-1 -ml-1">
+        <div class="relative flex-grow max-w-full flex-1 px-4">
             <label for="minPrice">Pris från:</label>
-            <input type="number" name="minPrice" id="minPrice" class="form-control" placeholder="Min"
+            <input type="number" name="minPrice" id="minPrice" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" placeholder="Min"
                 value="@ViewBag.minPrice" step="1">
         </div>
-        <div class="col">
+        <div class="relative flex-grow max-w-full flex-1 px-4">
             <label for="maxPrice">Pris till:</label>
-            <input type="number" name="maxPrice" id="maxPrice" class="form-control" placeholder="Max"
+            <input type="number" name="maxPrice" id="maxPrice" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" placeholder="Max"
                 value="@ViewBag.maxPrice" step="1">
         </div>
     </div>
-    <div class="form-row">
-        <div class="col">
+    <div class="flex flex-wrap -mr-1 -ml-1">
+        <div class="relative flex-grow max-w-full flex-1 px-4">
             <label for="minHeight">Mankhöjd från:</label>
-            <input type="number" name="minHeight" id="minHeight" class="form-control" placeholder="Min"
+            <input type="number" name="minHeight" id="minHeight" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" placeholder="Min"
                 value="@ViewBag.minHeight" step="1">
         </div>
-        <div class="col">
+        <div class="relative flex-grow max-w-full flex-1 px-4">
             <label for="maxHeight">Mankhöjd till:</label>
-            <input type="number" name="maxHeight" id="maxHeight" class="form-control" placeholder="Max"
+            <input type="number" name="maxHeight" id="maxHeight" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" placeholder="Max"
                 value="@ViewBag.maxHeight" step="1">
         </div>
     </div>
-    <div class="form-group">
+    <div class="mb-4">
         <label for="breedId">Ras:</label>
-        <select name="breedId" id="breedId" asp-items="ViewBag.BreedId" class="form-control">
+        <select name="breedId" id="breedId" asp-items="ViewBag.BreedId" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded">
             <option value="">Alla</option>
         </select>
     </div>
-    <div class="form-row">
-        <div class="col">
+    <div class="flex flex-wrap -mr-1 -ml-1">
+        <div class="relative flex-grow max-w-full flex-1 px-4">
             <label for="minBirthyear">Född från år:</label>
-            <input type="number" name="minBirthyear" id="minBirthyear" class="form-control" placeholder="Min"
+            <input type="number" name="minBirthyear" id="minBirthyear" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" placeholder="Min"
                 value="@ViewBag.minBirthyear" step="1">
         </div>
-        <div class="col">
+        <div class="relative flex-grow max-w-full flex-1 px-4">
             <label for="maxBirthyear">Född till år:</label>
-            <input type="number" name="maxBirthyear" id="maxBirthyear" class="form-control" placeholder="Max"
+            <input type="number" name="maxBirthyear" id="maxBirthyear" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" placeholder="Max"
                 value="@ViewBag.maxBirthyear" step="1">
         </div>
     </div>
-    <div class="form-group">
+    <div class="mb-4">
         <label for="gender">Kön:</label>
         @Html.DropDownList("gender", (IEnumerable<SelectListItem>)ViewBag.Gender, "Välj kön", new
             {
                 @class =
-                 "form-control"
+                 "block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded"
             })
     </div>
-    <div class="form-group">
+    <div class="mb-4">
         <label for="originId">Ursprung:</label>
-        <select name="originId" id="originId" asp-items="ViewBag.OriginId" class="form-control">
+        <select name="originId" id="originId" asp-items="ViewBag.OriginId" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded">
             <option value="">Alla</option>
         </select>
     </div>
 
-    <button type="submit" class="btn btn-primary">Filtrera</button>
-    <a href="@Url.Action("ApprovedAds", "Ad")" class="btn btn-secondary">Töm filter</a>
+    <button type="submit" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-blue-600 text-white hover:bg-blue-600">Filtrera</button>
+    <a href="@Url.Action("ApprovedAds", "Ad")" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-gray-600 text-white hover:bg-gray-700">Töm filter</a>
 </form>
 
-<table class="table">
+<table class="w-full max-w-full mb-4 bg-transparent">
     <thead>
         <tr>
             <th>@Html.DisplayNameFor(model => model[0].Title)</th>

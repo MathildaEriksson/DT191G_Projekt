@@ -7,7 +7,7 @@
 
 <partial name="_StatusMessage" for="StatusMessage" />
 <h3>@ViewData["Title"]</h3>
-<div class="alert alert-warning" role="alert">
+<div class="relative px-3 py-3 mb-4 border rounded bg-orange-200 border-orange-300 text-orange-800" role="alert">
     <p>
         <span class="glyphicon glyphicon-warning-sign"></span>
         <strong>If you reset your authenticator key your authenticator app will not work until you reconfigure it.</strong>
@@ -19,6 +19,6 @@
 </div>
 <div>
     <form id="reset-authenticator-form" method="post">
-        <button id="reset-authenticator-button" class="btn btn-danger" type="submit">Reset authenticator key</button>
+        <button id="reset-authenticator-button" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-red-600 text-white hover:bg-red-700" type="submit">Reset authenticator key</button>
     </form>
 </div>
