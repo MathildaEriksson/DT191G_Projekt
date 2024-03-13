@@ -48,7 +48,7 @@ namespace EquiMarketApp.Controllers
         }
 
         // GET: Approved ads
-        public async Task<IActionResult> ApprovedAds(string searchString, int? adTypeId, int? breedId, Gender? gender, int? originId, int? minPrice, int? maxPrice, int? minHeight, int? maxHeight, int? minBirthyear, int? maxBirthyear, int? countyId, int pageNumber = 1, int pageSize = 10)
+        public async Task<IActionResult> ApprovedAds(string searchString, int? adTypeId, int? breedId, Gender? gender, int? originId, int? minPrice, int? maxPrice, int? minHeight, int? maxHeight, int? minBirthyear, int? maxBirthyear, int? countyId, int pageNumber = 1, int pageSize = 6)
         {
             var approvedAdsQuery = _context.Ads.Where(a => a.IsApproved);
 

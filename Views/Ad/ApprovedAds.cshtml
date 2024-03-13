@@ -4,157 +4,153 @@
 @{
     ViewData["Title"] = "Annonser";
 }
+<div class="pb-24 pt-12 lg:grid lg:grid-cols-3 lg:gap-x-8 xl:grid-cols-4">
+    <aside>
+        <h2 class="sr-only">Filters</h2>
+          <!-- Mobile filter dialog toggle, controls the 'mobileFilterDialogOpen' state. -->
+          <button type="button" class="inline-flex items-center lg:hidden">
+            <span class="text-sm font-medium text-gray-700">Filters</span>
+            <svg class="ml-1 h-5 w-5 flex-shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+            </svg>
+          </button>
 
-<h2>Annonser</h2>
-<form method="get" asp-action="ApprovedAds">
-    <div class="mb-4">
-        <label for="adTypeId">Annonstyp:</label>
-        <select name="adTypeId" id="adTypeId" asp-items="ViewBag.AdTypeId" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded">
-            <option value="">Alla</option>
-        </select>
-    </div>
-    <div class="mb-4">
-        <label for="searchString">Sök:</label>
-        <input type="search" name="searchString" id="searchString" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded"
-            placeholder="Sök i titel och beskrivning" value="@ViewBag.CurrentSearchString" />
-    </div>
-    <div class="mb-4">
-        <label for="countyId">Län:</label>
-        <select name="countyId" id="countyId" asp-items="ViewBag.CountyId" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded">
-            <option value="">Alla</option>
-        </select>
-    </div>
-    <div class="flex flex-wrap -mr-1 -ml-1">
-        <div class="relative flex-grow max-w-full flex-1 px-4">
-            <label for="minPrice">Pris från:</label>
-            <input type="number" name="minPrice" id="minPrice" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" placeholder="Min"
-                value="@ViewBag.minPrice" step="1">
-        </div>
-        <div class="relative flex-grow max-w-full flex-1 px-4">
-            <label for="maxPrice">Pris till:</label>
-            <input type="number" name="maxPrice" id="maxPrice" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" placeholder="Max"
-                value="@ViewBag.maxPrice" step="1">
-        </div>
-    </div>
-    <div class="flex flex-wrap -mr-1 -ml-1">
-        <div class="relative flex-grow max-w-full flex-1 px-4">
-            <label for="minHeight">Mankhöjd från:</label>
-            <input type="number" name="minHeight" id="minHeight" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" placeholder="Min"
-                value="@ViewBag.minHeight" step="1">
-        </div>
-        <div class="relative flex-grow max-w-full flex-1 px-4">
-            <label for="maxHeight">Mankhöjd till:</label>
-            <input type="number" name="maxHeight" id="maxHeight" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" placeholder="Max"
-                value="@ViewBag.maxHeight" step="1">
-        </div>
-    </div>
-    <div class="mb-4">
-        <label for="breedId">Ras:</label>
-        <select name="breedId" id="breedId" asp-items="ViewBag.BreedId" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded">
-            <option value="">Alla</option>
-        </select>
-    </div>
-    <div class="flex flex-wrap -mr-1 -ml-1">
-        <div class="relative flex-grow max-w-full flex-1 px-4">
-            <label for="minBirthyear">Född från år:</label>
-            <input type="number" name="minBirthyear" id="minBirthyear" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" placeholder="Min"
-                value="@ViewBag.minBirthyear" step="1">
-        </div>
-        <div class="relative flex-grow max-w-full flex-1 px-4">
-            <label for="maxBirthyear">Född till år:</label>
-            <input type="number" name="maxBirthyear" id="maxBirthyear" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" placeholder="Max"
-                value="@ViewBag.maxBirthyear" step="1">
-        </div>
-    </div>
-    <div class="mb-4">
-        <label for="gender">Kön:</label>
-        @Html.DropDownList("gender", (IEnumerable<SelectListItem>)ViewBag.Gender, "Välj kön", new
-            {
-                @class =
-                 "block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded"
-            })
-    </div>
-    <div class="mb-4">
-        <label for="originId">Ursprung:</label>
-        <select name="originId" id="originId" asp-items="ViewBag.OriginId" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded">
-            <option value="">Alla</option>
-        </select>
-    </div>
-
-    <button type="submit" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-blue-600 text-white hover:bg-blue-600">Filtrera</button>
-    <a href="@Url.Action("ApprovedAds", "Ad")" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-gray-600 text-white hover:bg-gray-700">Töm filter</a>
-</form>
-
-<table class="w-full max-w-full mb-4 bg-transparent">
-    <thead>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model[0].Title)</th>
-            <th>@Html.DisplayNameFor(model => model[0].Description)</th>
-            <th>@Html.DisplayNameFor(model => model[0].Price)</th>
-            <th>@Html.DisplayNameFor(model => model[0].CreatedAt)</th>
-            <th>@Html.DisplayNameFor(model => model[0].BirthYear)</th>
-            <th>@Html.DisplayNameFor(model => model[0].Height)</th>
-            <th>@Html.DisplayNameFor(model => model[0].Name)</th>
-            <th>@Html.DisplayNameFor(model => model[0].Gender)</th>
-            <th>@Html.DisplayNameFor(model => model[0].Breed.Name)</th>
-            <th>@Html.DisplayNameFor(model => model[0].Location.Name)</th>
-            <th>@Html.DisplayNameFor(model => model[0].Origin)</th>
-            <th>Bild/er</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    <a href="@Url.Action("Details", "Ad", new { id = item.AdId, returnUrl = Context.Request.Path })">@Html.DisplayFor(modelItem
-                    => item.Title)</a>
-                </td>
-                <td>@Html.DisplayFor(modelItem => item.Description)</td>
-                <td>@Html.DisplayFor(modelItem => item.Price)</td>
-                <td>@Html.DisplayFor(modelItem => item.CreatedAt)</td>
-                <td>@Html.DisplayFor(modelItem => item.BirthYear)</td>
-                <td>@Html.DisplayFor(modelItem => item.Height)</td>
-                <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                <td>@Html.DisplayFor(modelItem => item.Gender)</td>
-                <td>@Html.DisplayFor(modelItem => item.Breed.Name)</td>
-                <td>@Html.DisplayFor(modelItem => item.Location.Name)</td>
-                <td>@Html.DisplayFor(modelItem => item.Origin.Country)</td>
-                <td>
-                    @if (item.Images != null && item.Images.Any())
+        <div class="hidden lg:block">
+            <form method="get" asp-action="ApprovedAds">
+                <div>
+                    <button type="submit" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-blue-600 text-white hover:bg-blue-600">Filtrera</button>
+                    <a asp-area="" asp-controller="Ad" asp-action="ApprovedAds" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-gray-600 text-white hover:bg-gray-700">Töm filter</a>
+                </div>
+                <div class="mt-4">  
+                    <label for="adTypeId">Annonstyp:</label>
+                    <select name="adTypeId" id="adTypeId" asp-items="ViewBag.AdTypeId" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded">
+                    <option value="">Alla</option>
+                    </select>
+                </div>
+                <div class="mt-4">
+                    <label for="searchString">Sök:</label>
+                    <input type="search" name="searchString" id="searchString" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" placeholder="Sök i titel och beskrivning" value="@ViewBag.CurrentSearchString" />
+                </div>
+                <div class="mt-4">
+                    <label for="countyId">Län:</label>
+                    <select name="countyId" id="countyId" asp-items="ViewBag.CountyId" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded">
+                    <option value="">Alla</option>
+                    </select>
+                </div>
+                <div class="flex mt-4">
+                    <div class="relative flex-grow max-w-full flex-1 mr-2">
+                        <label for="minPrice">Pris från:</label>
+                        <input type="number" name="minPrice" id="minPrice" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" placeholder="Min" value="@ViewBag.minPrice" step="1">
+                    </div>
+                    <div class="relative flex-grow max-w-full flex-1">
+                        <label for="maxPrice">Pris till:</label>
+                        <input type="number" name="maxPrice" id="maxPrice" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" placeholder="Max" value="@ViewBag.maxPrice" step="1">
+                    </div>
+                </div>
+            <div class="flex mt-4">
+                <div class="relative flex-grow max-w-full flex-1 mr-2">
+                    <label for="minHeight">Mankhöjd från:</label>
+                    <input type="number" name="minHeight" id="minHeight" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" placeholder="Min" value="@ViewBag.minHeight" step="1">
+                </div>
+                <div class="relative flex-grow max-w-full flex-1">
+                    <label for="maxHeight">Mankhöjd till:</label>
+                    <input type="number" name="maxHeight" id="maxHeight" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" placeholder="Max" value="@ViewBag.maxHeight" step="1">
+                </div>
+            </div>
+            <div class="mt-4">
+                <label for="breedId">Ras:</label>
+                <select name="breedId" id="breedId" asp-items="ViewBag.BreedId" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded">
+                <option value="">Alla</option>
+                </select>
+            </div>
+            <div class="flex mt-4">
+                <div class="relative flex-grow max-w-full flex-1 mr-2">
+                    <label for="minBirthyear">Född från år:</label>
+                    <input type="number" name="minBirthyear" id="minBirthyear" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" placeholder="Min" value="@ViewBag.minBirthyear" step="1">
+                </div>
+                <div class="relative flex-grow max-w-full flex-1">
+                    <label for="maxBirthyear">Född till år:</label>
+                    <input type="number" name="maxBirthyear" id="maxBirthyear" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" placeholder="Max" value="@ViewBag.maxBirthyear" step="1">
+                </div>
+            </div>
+            <div class="mt-4">
+                <label for="gender">Kön:</label>
+                @Html.DropDownList("gender", (IEnumerable<SelectListItem>)ViewBag.Gender, "Välj kön", new
                     {
-                        foreach (var image in item.Images)
-                        {
-                            <img src="@Url.Content("~/" + image.ImagePath)" alt="Bild på annonsobjekt"
-                                style="width: 150px; height: auto;" />
-                        }
+                        @class =
+                        "block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded"
+                    })
+            </div>
+            <div class="mt-4">
+                <label for="originId">Ursprung:</label>
+                <select name="originId" id="originId" asp-items="ViewBag.OriginId" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded">
+                    <option value="">Alla</option>
+                </select>
+            </div>                           
+    </form>
+    </div>
+    </aside>
+        <section aria-labelledby="product-heading" class="mt-6 lg:col-span-2 lg:mt-0 xl:col-span-3">
+          <h2 id="product-heading" class="sr-only">Products</h2>
+          <div class="grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:gap-x-8 xl:grid-cols-3">
+
+            @foreach (var item in Model) {
+            <div class="group relative flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white">
+              <div class="aspect-h-4 aspect-w-3 bg-gray-200 sm:aspect-none group-hover:opacity-75 sm:h-96">
+                @if (item.Images != null && item.Images.Any())
+                    {
+                        <img src="@Url.Content("~/" + item.Images.First().ImagePath)" alt="Bild på annonsobjekt" class="h-full w-full object-cover object-center sm:h-full sm:w-full" />
                     }
                     else
                     {
-                        <img src="~/images/placeholder.png" alt="Placeholderbild" style="width: 150px; height: auto;" />
+                        <img src="~/images/placeholder.png" alt="Placeholderbild" class="h-full w-full object-cover object-center sm:h-full sm:w-full" />
+                    }                
+              </div>
+              <div class="flex flex-1 flex-col space-y-2 p-4">
+                <h3 class="text-sm font-medium text-gray-900">
+                    <a href="@Url.Action("Details", "Ad", new { id = item.AdId, returnUrl = Context.Request.Path })">
+                        <span aria-hidden="true" class="absolute inset-0"></span>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </a>
+                </h3>
+                <p class="text-sm text-gray-900">@item.Height cm, @item.Gender, född @item.BirthYear</p>
+                <p class="text-sm text-gray-500">
+                    @if (item.Description.Length > 200)
+                    {
+                        @Html.Raw(Html.Encode(item.Description.Substring(0, 200)) + "...")
                     }
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.Description)
+                    }
+                </p>
+                <div class="flex flex-1 flex-col justify-end">
+                  <p class="text-base font-medium text-gray-900">@item.Price.ToString("0") kr</p>
+                </div>
+              </div>
+            </div>
+            }
+          </div>
+              @* Paginering *@
+              <div class="flex flex-1 justify-between sm:justify-end mt-4">
+                @if (Model.HasPreviousPage)
+                {
+                    <a asp-action="ApprovedAds" asp-route-pageNumber="@(Model.PageIndex - 1)"
+                        asp-route-pageSize="@Model.PageSize" class="relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0">Föregående</a>
+                }
+                else
+                {
+                    <span class="relative inline-flex items-center rounded-md bg-gray-50 px-3 py-2 text-sm font-semibold text-gray-500 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0">Föregående</span>
+                }
 
-@* Paginering *@
-@if (Model.HasPreviousPage)
-{
-    <a asp-action="ApprovedAds" asp-route-pageNumber="@(Model.PageIndex - 1)"
-        asp-route-pageSize="@Model.PageSize">Föregående</a>
-}
-else
-{
-    <span>Föregående</span>
-}
-
-@if (Model.HasNextPage)
-{
-    <a asp-action="ApprovedAds" asp-route-pageNumber="@(Model.PageIndex + 1)" asp-route-pageSize="@Model.PageSize">Nästa</a>
-}
-else
-{
-    <span>Nästa</span>
-}
+                @if (Model.HasNextPage)
+                {
+                    <a asp-action="ApprovedAds" asp-route-pageNumber="@(Model.PageIndex + 1)" asp-route-pageSize="@Model.PageSize" class="relative ml-3 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0">Nästa</a>
+                }
+                else
+                {
+                    <span class="relative ml-3 inline-flex items-center rounded-md bg-gray-50 px-3 py-2 text-sm font-semibold text-gray-500 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0">Nästa</span>
+                }
+                </div>
+        </section>
+</div>
