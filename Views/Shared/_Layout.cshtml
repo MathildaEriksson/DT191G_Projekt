@@ -7,89 +7,175 @@
     var isUserAdmin = User.IsInRole("Admin");
 }
 
-<html lang="en">
+<html lang="sv">
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - EquiMarketApp</title>
-    <link rel="stylesheet" href="~/css/app.css"/>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/EquiMarketApp.styles.css" asp-append-version="true" />
     <link href="~/css/styles.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wdth,wght@0,62.5..100,100..900;1,62.5..100,100..900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
 </head>
 
-<body>
-    <header>
-        <nav class="relative flex flex-wrap items-center content-between py-3 px-4  navbar-toggleable-sm text-black bg-white border-b box-shadow mb-3">
-            <div class="container mx-auto sm:px-4 mx-auto sm:px-4 mx-auto sm:px-4 max-w-full">
-                <a class="inline-block pt-1 pb-1 mr-4 text-lg whitespace-no-wrap" asp-area="" asp-controller="Home" asp-action="Index">EquiMarketApp</a>
-                <button class="py-1 px-2 text-md leading-normal bg-transparent border border-transparent rounded" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="px-5 py-1 border border-gray-600 rounded"></span>
-                </button>
-                <div class="flex-grow items-center hidden sm:inline-flex justify-between">
-                    <ul class="flex flex-wrap list-reset pl-0 mb-0 flex-grow">
-                        <li class="">
-                            <a class="inline-block py-2 px-4 no-underline text-gray-900" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="">
-                            <a class="inline-block py-2 px-4 no-underline text-gray-900" asp-area="" asp-controller="Ad"
-                                asp-action="ApprovedAds">Annonser</a>
-                        </li>
-                        @if (SignInManager.IsSignedIn(User))
-                        {
-                            <li class="">
-                                <a class="inline-block py-2 px-4 no-underline text-gray-900" asp-area="" asp-controller="Ad" asp-action="Index">Mina
-                                    annonser</a>
-                            </li>
-                        }
-                        @if (isUserAdmin)
-                        {
-                            <li class=" relative">
-                                <a class="inline-block py-2 px-4 no-underline w-0 h-0 ml-1 align border-b-0 border-t-1 border-r-1 border-l-1 text-gray-900" id="navbarDropdownMenuLink" role="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    Admin
-                                </a>
-                                <ul class=" absolute left-0 z-50 float-left hidden list-reset	 py-2 mt-1 text-base bg-white border border-gray-300 rounded" aria-labelledby="navbarDropdownMenuLink">
-                                    <li><a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" asp-area="" asp-controller="Ad" asp-action="Index">Alla
-                                            annonser</a></li>
-                                    <li><a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" asp-area="" asp-controller="Ad"
-                                            asp-action="NonApprovedAds">Ej godkända annonser</a></li>
-                                    <li><a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" asp-area="" asp-controller="Origin"
-                                            asp-action="Index">Ursprungsländer</a></li>
-                                    <li><a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" asp-area="" asp-controller="County"
-                                            asp-action="Index">Län</a></li>
-                                    <li><a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" asp-area="" asp-controller="City"
-                                            asp-action="Index">Städer</a></li>
-                                    <li><a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" asp-area="" asp-controller="Breed"
-                                            asp-action="Index">Raser</a></li>
-                                    <li><a class="block w-full py-1 px-6 font-normal text-gray-900 whitespace-no-wrap border-0" asp-area="" asp-controller="AdType"
-                                            asp-action="Index">Annonstyper</a></li>
-                                </ul>
-                            </li>
-                        }
+<body class="min-h-screen bg-cream font-notosans">
+    <nav class="bg-royalBlue">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a class="flex-shrink-0" asp-area="" asp-controller="Ad" asp-action="ApprovedAds">
+                        <img class="h-12 w-auto" src="~/images/logo.svg" alt="EquiMarket">
+                    </a>
+                    <div class="hidden md:block">
+                        <div class="ml-10 flex items-center space-x-4">
+                            <a asp-area="" asp-controller="Ad" asp-action="ApprovedAds"
+                                class="flex items-center hover:bg-darkBlue px-3 py-2 rounded-md text-white font-semibold">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                    stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                                </svg>
+                                <span class="ml-3 text-sm">Annonser</span>
+                            </a>
 
-                    </ul>
-                    <partial name="_LoginPartial" />
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                                <a asp-area="" asp-controller="Ad" asp-action="Index"
+                                    class="flex items-center hover:bg-darkBlue px-3 py-2 rounded-md text-white font-semibold">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z" />
+                                    </svg>
+                                    <span class="ml-3 text-sm">Mina annonser</span>
+                                </a>
+                            }
+                            @if (isUserAdmin)
+                            {
+                                <div class="relative">
+                                    <a class="flex items-center hover:bg-darkBlue px-3 py-2 rounded-md text-white font-semibold"
+                                        id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 0 1 1.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.559.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.894.149c-.424.07-.764.383-.929.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 0 1-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.398.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 0 1-.12-1.45l.527-.737c.25-.35.272-.806.108-1.204-.165-.397-.506-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.108-1.204l-.526-.738a1.125 1.125 0 0 1 .12-1.45l.773-.773a1.125 1.125 0 0 1 1.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894Z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                        </svg>
+                                        <span class="ml-3 text-sm">Admin</span>
+                                    </a>
+                                    <ul class="absolute left-0 z-50 hidden list-reset py-2 mt-1 text-base bg-white border border-gray-300 rounded"
+                                        id="adminDropdown">
+                                        <li><a class="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
+                                                asp-area="" asp-controller="Ad" asp-action="Index">Alla
+                                                annonser</a></li>
+                                        <li><a class="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
+                                                asp-area="" asp-controller="Ad" asp-action="NonApprovedAds">Ej godkända
+                                                annonser</a></li>
+                                        <li><a class="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
+                                                asp-area="" asp-controller="Origin" asp-action="Index">Ursprungsländer</a>
+                                        </li>
+                                        <li><a class="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
+                                                asp-area="" asp-controller="County" asp-action="Index">Län</a></li>
+                                        <li><a class="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
+                                                asp-area="" asp-controller="City" asp-action="Index">Städer</a></li>
+                                        <li><a class="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
+                                                asp-area="" asp-controller="Breed" asp-action="Index">Raser</a></li>
+                                        <li><a class="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
+                                                asp-area="" asp-controller="AdType" asp-action="Index">Annonstyper</a></li>
+                                    </ul>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <partial name="_LoginPartial" />
+                <div class="-mr-2 flex md:hidden">
+                    <!-- Mobile menu button -->
+                    <button type="button"
+                        class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                        aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="absolute -inset-0.5"></span>
+                        <span class="sr-only">Open main menu</span>
+                        <svg id="menuOpenIcon" class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                        </svg>
+                        <svg id="menuCloseIcon" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"
+                            aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                        </svg>
+                    </button>
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container mx-auto sm:px-4 mx-auto sm:px-4 mx-auto sm:px-4">
-        <main role="main" class="pb-3">
-            @RenderBody()
+        </div>
+
+        <!-- Mobile menu, show/hide based on menu state. -->
+        <div class="md:hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a class="hover:bg-darkBlue text-white flex items-center px-3 py-2 rounded-md text-sm font-medium"
+                    asp-area="" asp-controller="Ad" asp-action="ApprovedAds">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                        stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                    </svg>
+                    <span class="ml-3 text-sm">Annonser</span></a>
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <a class="hover:bg-darkBlue text-white flex items-center px-3 py-2 rounded-md text-sm font-medium"
+                        asp-area="" asp-controller="Ad" asp-action="Index">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z" />
+                        </svg>
+                       <span class="ml-3 text-sm">Mina annonser</span></a>
+                }
+                @if (isUserAdmin)
+                {
+                    <p class="text-white text-bold pt-4">Admin</p>
+                    <a class="hover:bg-darkBlue text-white block px-3 py-2 rounded-md text-sm font-medium" asp-area=""
+                        asp-controller="Ad" asp-action="Index">Alla
+                        annonser</a>
+                    <a class="hover:bg-darkBlue text-white block px-3 py-2 rounded-md text-sm font-medium" asp-area=""
+                        asp-controller="Ad" asp-action="NonApprovedAds">Ej godkända
+                        annonser</a>
+                    <a class="hover:bg-darkBlue text-white block px-3 py-2 rounded-md text-sm font-medium" asp-area=""
+                        asp-controller="Origin" asp-action="Index">Ursprungsländer</a>
+                    <a class="hover:bg-darkBlue text-white block px-3 py-2 rounded-md text-sm font-medium" asp-area=""
+                        asp-controller="County" asp-action="Index">Län</a>
+                    <a class="hover:bg-darkBlue text-white block px-3 py-2 rounded-md text-sm font-medium" asp-area=""
+                        asp-controller="City" asp-action="Index">Städer</a>
+                    <a class="hover:bg-darkBlue text-white block px-3 py-2 rounded-md text-sm font-medium" asp-area=""
+                        asp-controller="Breed" asp-action="Index">Raser</a>
+                    <a class="hover:bg-darkBlue text-white block px-3 py-2 rounded-md text-sm font-medium" asp-area=""
+                        asp-controller="AdType" asp-action="Index">Annonstyper</a>
+                }
+            </div>
+        </div>
+    </nav>
+
+    <div class="py-10">
+        <header>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h1 class="text-3xl font-bold leading-tight text-darkBlue font-merriweather">
+                    @ViewData["Title"]
+                </h1>
+            </div>
+        </header>
+        <main>
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="px-4 py-8 sm:px-0">
+                    @RenderBody()
+                </div>
+            </div>
         </main>
     </div>
-
-    <footer class="border-t footer text-gray-700">
-        <div class="container mx-auto sm:px-4 mx-auto sm:px-4 mx-auto sm:px-4">
-            &copy; 2024 - EquiMarketApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
