@@ -186,8 +186,8 @@
     </aside>
         <section aria-labelledby="product-heading" class="mt-6 lg:col-span-2 lg:mt-0 xl:col-span-3">
           <h2 id="product-heading" class="sr-only">Annonser</h2>
+        @if (Model.Any()) {
           <div class="grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:gap-x-8 xl:grid-cols-3">
-
             @foreach (var item in Model) {
             <div class="group relative flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white">
               <div class="aspect-h-4 aspect-w-3 bg-gray-200 sm:aspect-none group-hover:opacity-75 sm:h-96">
@@ -225,6 +225,13 @@
             </div>
             }
           </div>
+          }
+            else
+            {
+                <div class="text-center">
+                <p class="mt-10 text-base font-semibold leading-6 text-gray-900">Inga annonser funna.</p>
+                </div>
+            }
               @* Paginering *@
               <div class="flex flex-1 justify-between sm:justify-end mt-4">
                 @if (Model.HasPreviousPage)

@@ -1,7 +1,7 @@
 @model EquiMarketApp.Models.Ad
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Skapa annons";
 }
 
 @using Microsoft.AspNetCore.Identity
@@ -12,52 +12,48 @@
     var isUserAdmin = User.IsInRole("Admin");
 }
 
-<h1>Create</h1>
-
-<h4>Ad</h4>
-<hr />
 <div class="flex flex-wrap ">
     <div class="md:w-1/3 pr-4 pl-4">
         <form asp-action="Create" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-red-600"></div>
+            <div asp-validation-summary="ModelOnly" class="mt-2 text-sm text-red-600"></div>
             <div class="mb-4">
                 <label asp-for="Title" class="control-label"></label>
                 <input asp-for="Title" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" />
-                <span asp-validation-for="Title" class="text-red-600"></span>
+                <span asp-validation-for="Title" class="mt-2 text-sm text-red-600"></span>
             </div>
             <div class="mb-4">
                 <label asp-for="Description" class="control-label"></label>
                 <input asp-for="Description" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" />
-                <span asp-validation-for="Description" class="text-red-600"></span>
+                <span asp-validation-for="Description" class="mt-2 text-sm text-red-600"></span>
             </div>
             <div class="mb-4">
                 <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" type="number" />
-                <span asp-validation-for="Price" class="text-red-600"></span>
+                <input asp-for="Price" value="0" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" type="number" />
+                <span asp-validation-for="Price" class="mt-2 text-sm text-red-600"></span>
             </div>
             <div class="mb-4">
                 <label asp-for="BirthYear" class="control-label"></label>
-                <input asp-for="BirthYear" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" type="number" />
-                <span asp-validation-for="BirthYear" class="text-red-600"></span>
+                <input asp-for="BirthYear" value="0" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" type="number" />
+                <span asp-validation-for="BirthYear" class="mt-2 text-sm text-red-600"></span>
             </div>
             <div class="mb-4">
                 <label asp-for="Height" class="control-label"></label>
-                <input asp-for="Height" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" />
-                <span asp-validation-for="Height" class="text-red-600"></span>
+                <input asp-for="Height" value="0" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" />
+                <span asp-validation-for="Height" class="mt-2 text-sm text-red-600"></span>
             </div>
             <div class="mb-4">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" />
-                <span asp-validation-for="Name" class="text-red-600"></span>
+                <span asp-validation-for="Name" class="mt-2 text-sm text-red-600"></span>
             </div>
             <div class="mb-4">
                 <label asp-for="Gender" class="control-label"></label>
                 <select asp-for="Gender" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" asp-items="Html.GetEnumSelectList<Gender>()"></select>
-                <span asp-validation-for="Gender" class="text-red-600"></span>
+                <span asp-validation-for="Gender" class="mt-2 text-sm text-red-600"></span>
             </div>
             @if (isUserAdmin)
             {
-                <div class="mb-4 relative block mb-2">
+                <div class="mb-4 relative block">
                     <label class="text-gray-700 pl-6 mb-0">
                         <input class="absolute mt-1 -ml-6" asp-for="IsApproved" /> @Html.DisplayNameFor(model =>
                     model.IsApproved)
@@ -77,14 +73,14 @@
                 <select asp-for="AdTypeId" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" asp-items="ViewBag.AdTypeId"></select>
             </div>
             <div class="mb-4">
-                <label asp-for="Location.CountyId" class="control-label">County</label>
+                <label asp-for="Location.CountyId" class="control-label">Län</label>
                 <select asp-for="Location.CountyId" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" asp-items="ViewBag.CountyId"
                     id="countyDropdown">
                     <option value="">Välj ett län</option>
                 </select>
             </div>
             <div class="mb-4">
-                <label asp-for="CityId" class="control-label">City</label>
+                <label asp-for="CityId" class="control-label">Stad</label>
                 <select asp-for="CityId" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" id="cityDropdown">
                     <option value="">Välj en stad</option>
                 </select>
@@ -101,7 +97,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Tillbaka till lista</a>
 </div>
 
 @section Scripts {
