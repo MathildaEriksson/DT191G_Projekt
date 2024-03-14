@@ -5,11 +5,11 @@
     ViewData["ActivePage"] = ManageNavPages.PersonalData;
 }
 
-<h3>@ViewData["Title"]</h3>
+<h3 class="text-base font-semibold leading-7 text-gray-900 mt-4 mb-2">@ViewData["Title"]</h3>
 
 <div class="relative px-3 py-3 mb-4 border rounded bg-orange-200 border-orange-300 text-orange-800" role="alert">
     <p>
-        <strong>Deleting this data will permanently remove your account, and this cannot be recovered.</strong>
+        <strong>Att ta bort denna data kommer permanent radera ditt konto, och det går inte att återställa.</strong>
     </p>
 </div>
 
@@ -19,12 +19,12 @@
         @if (Model.RequirePassword)
         {
             <div class="form-floating mb-3">
-                <input asp-for="Input.Password" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" autocomplete="current-password" aria-required="true" placeholder="Please enter your password." />
-                <label asp-for="Input.Password" class="form-label"></label>
+                <label asp-for="Input.Password" class="block text-sm font-medium leading-6 text-gray-900">Lösenord</label>
+                <input asp-for="Input.Password" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-royalBlue sm:text-sm sm:leading-6" autocomplete="current-password" aria-required="true" placeholder="Ange ditt lösenord" />                
                 <span asp-validation-for="Input.Password" class="text-red-600"></span>
             </div>
         }
-        <button class="w-full inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded  no-underline py-3 px-4 leading-tight text-xl bg-red-600 text-white hover:bg-red-700" type="submit">Delete data and close my account</button>
+        <button class="flex w-full justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600" type="submit">Radera data och stäng mitt konto</button>
     </form>
 </div>
 

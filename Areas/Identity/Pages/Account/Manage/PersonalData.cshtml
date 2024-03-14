@@ -9,16 +9,16 @@
 
 <div class="flex flex-wrap ">
     <div class="md:w-1/2 pr-4 pl-4">
-        <p>Ditt konto innehåller personlig data som du har gett oss. På denna sida kan du ladda ner eller ta bort den datan.</p>
+        <p class="block text-sm font-medium leading-6 text-gray-900 mb-4">Ditt konto innehåller personlig data som du har gett oss. På denna sida kan du ladda ner eller ta bort den datan.</p>
         <p>
             <strong>Att ta bort denna data kommer permanent radera ditt konto, och det går inte att återställa.</strong>
         </p>
         <div class="flex mt-4">
         <form id="download-data" asp-page="DownloadPersonalData" method="post" class="mr-3">
-            <button class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-blue-600 text-white hover:bg-blue-600" type="submit">Ladda ner</button>
+            <button class="flex w-full justify-center rounded-md bg-green-700 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600" type="submit">Ladda ner</button>
         </form>
         <p>
-            <a id="delete" asp-page="DeletePersonalData" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-red-600 text-white hover:bg-red-700">Radera</a>
+            <a id="delete" asp-page="DeletePersonalData" class="flex w-full justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">Radera</a>
         </p>
         </div>
     </div>
