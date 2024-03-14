@@ -54,7 +54,8 @@ namespace EquiMarketApp.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                approvedAdsQuery = approvedAdsQuery.Where(a => a.Title.Contains(searchString) || a.Description.Contains(searchString));
+                var lowerCaseSearchString = searchString.ToLower();
+                approvedAdsQuery = approvedAdsQuery.Where(a => a.Title.ToLower().Contains(lowerCaseSearchString) || a.Description.ToLower().Contains(lowerCaseSearchString));
             }
 
             if (adTypeId.HasValue)
