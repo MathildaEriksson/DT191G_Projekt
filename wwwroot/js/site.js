@@ -9,12 +9,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (btn && menu) {
         btn.addEventListener('click', () => {
-            const expanded = btn.getAttribute('aria-expanded') === 'true';
+            const expanded = btn.getAttribute('aria-expanded') === 'true' || false;
             btn.setAttribute('aria-expanded', !expanded);
-            menu.classList.toggle('hidden');
-    
-            openIcon.classList.toggle('hidden');
-            closeIcon.classList.toggle('hidden');
+            menu && menu.classList.toggle('hidden');
+            openIcon && openIcon.classList.toggle('hidden');
+            closeIcon && closeIcon.classList.toggle('hidden');
         });
     }
    
@@ -22,25 +21,29 @@ document.addEventListener('DOMContentLoaded', function() {
     const adminLink = document.getElementById('navbarDropdownMenuLink');
     const adminDropdown = document.getElementById('adminDropdown');
     
-    adminLink.addEventListener('click', () => adminDropdown.classList.toggle('hidden'));
+    if (adminLink && adminDropdown) {
+        adminLink.addEventListener('click', () => adminDropdown.classList.toggle('hidden'));
+    }
 
     // Profile dropdown
     const userMenuButton = document.querySelector('#user-menu-button');
     const userMenuDropdown = document.querySelector('[role="menu"]');
 
-    userMenuButton.addEventListener('click', () => {
-        const isExpanded = userMenuButton.getAttribute('aria-expanded') === 'true';
-        userMenuButton.setAttribute('aria-expanded', !isExpanded);
-        userMenuDropdown.classList.toggle('hidden');
-    });
+    if (userMenuButton && userMenuDropdown) {
+        userMenuButton.addEventListener('click', () => {
+            const isExpanded = userMenuButton.getAttribute('aria-expanded') === 'true' || false;
+            userMenuButton.setAttribute('aria-expanded', !isExpanded);
+            userMenuDropdown.classList.toggle('hidden');
+        });
+    }
 
-    // Close dropdowns if clicked outside
+    // Close dropdowns if clicked outside, only if elements exist
     document.addEventListener('click', (e) => {
-        if (!adminLink.contains(e.target) && !adminDropdown.contains(e.target)) {
+        if (adminLink && adminDropdown && !adminLink.contains(e.target) && !adminDropdown.contains(e.target)) {
             adminDropdown.classList.add('hidden');
         }
 
-        if (!userMenuButton.contains(e.target) && !userMenuDropdown.contains(e.target)) {
+        if (userMenuButton && userMenuDropdown && !userMenuButton.contains(e.target) && !userMenuDropdown.contains(e.target)) {
             userMenuDropdown.classList.add('hidden');
             userMenuButton.setAttribute('aria-expanded', false);
         }

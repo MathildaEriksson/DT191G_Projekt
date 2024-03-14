@@ -1,11 +1,11 @@
 ﻿@page
 @model EmailModel
 @{
-    ViewData["Title"] = "Manage Email";
+    ViewData["Title"] = "Hantera e-post";
     ViewData["ActivePage"] = ManageNavPages.Email;
 }
 
-<h3>@ViewData["Title"]</h3>
+<h3 class="text-base font-semibold leading-7 text-gray-900 mt-4 mb-2">@ViewData["Title"]</h3>
 <partial name="_StatusMessage" for="StatusMessage" />
 <div class="flex flex-wrap ">
     <div class="md:w-1/2 pr-4 pl-4">
@@ -14,27 +14,27 @@
             @if (Model.IsEmailConfirmed)
             {
                 <div class="form-floating mb-3 relative flex items-stretch w-full">
-                    <input asp-for="Email" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" placeholder="Please enter your email." disabled />
-                        <div class="input-group-append">
+                    <input asp-for="Email" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-royalBlue sm:text-sm sm:leading-6" placeholder="Var vänlig ange din e-post" disabled />
+                        <div class="input-group-append ml-2">
                             <span class="h-full input-group-text text-green-500 font-bold">✓</span>
                         </div>
-                    <label asp-for="Email" class="form-label"></label>
+                    <label asp-for="Email" class="block text-sm font-medium leading-6 text-gray-900"></label>
                 </div>
             }
             else
             {
                 <div class="form-floating mb-3">
-                    <input asp-for="Email" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" placeholder="Please enter your email." disabled />
-                    <label asp-for="Email" class="form-label"></label>
-                    <button id="email-verification" type="submit" asp-page-handler="SendVerificationEmail" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline font-normal text-blue-700 bg-transparent">Send verification email</button>
+                    <input asp-for="Email" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-royalBlue sm:text-sm sm:leading-6" placeholder="Please enter your email." disabled />
+                    <label asp-for="Email" class="block text-sm font-medium leading-6 text-gray-900"></label>
+                    <button id="email-verification" type="submit" asp-page-handler="SendVerificationEmail" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline text-blue-700 bg-transparent">Send verification email</button>
                 </div>
             }
             <div class="form-floating mb-3">
-                <input asp-for="Input.NewEmail" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" autocomplete="email" aria-required="true" placeholder="Please enter new email." />
-                <label asp-for="Input.NewEmail" class="form-label"></label>
+                <label asp-for="Input.NewEmail" class="block text-sm font-medium leading-6 text-gray-900">Ny e-post</label>
+                <input asp-for="Input.NewEmail" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-royalBlue sm:text-sm sm:leading-6" autocomplete="email" aria-required="true" placeholder="Please enter new email." />                
                 <span asp-validation-for="Input.NewEmail" class="text-red-600"></span>
             </div>
-            <button id="change-email-button" type="submit" asp-page-handler="ChangeEmail" class="w-full inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded  no-underline py-3 px-4 leading-tight text-xl bg-blue-600 text-white hover:bg-blue-600">Change email</button>
+            <button id="change-email-button" type="submit" asp-page-handler="ChangeEmail" class="w-full inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded  no-underline py-3 px-4 leading-tight text-xl bg-green-700 text-white hover:bg-green-600">Byt e-post</button>
         </form>
     </div>
 </div>

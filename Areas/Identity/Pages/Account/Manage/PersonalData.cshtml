@@ -1,24 +1,26 @@
 ﻿@page
 @model PersonalDataModel
 @{
-    ViewData["Title"] = "Personal Data";
+    ViewData["Title"] = "Personlig data";
     ViewData["ActivePage"] = ManageNavPages.PersonalData;
 }
 
-<h3>@ViewData["Title"]</h3>
+<h3 class="text-base font-semibold leading-7 text-gray-900 mt-4 mb-2">@ViewData["Title"]</h3>
 
 <div class="flex flex-wrap ">
     <div class="md:w-1/2 pr-4 pl-4">
-        <p>Your account contains personal data that you have given us. This page allows you to download or delete that data.</p>
+        <p>Ditt konto innehåller personlig data som du har gett oss. På denna sida kan du ladda ner eller ta bort den datan.</p>
         <p>
-            <strong>Deleting this data will permanently remove your account, and this cannot be recovered.</strong>
+            <strong>Att ta bort denna data kommer permanent radera ditt konto, och det går inte att återställa.</strong>
         </p>
-        <form id="download-data" asp-page="DownloadPersonalData" method="post">
-            <button class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-blue-600 text-white hover:bg-blue-600" type="submit">Download</button>
+        <div class="flex mt-4">
+        <form id="download-data" asp-page="DownloadPersonalData" method="post" class="mr-3">
+            <button class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-blue-600 text-white hover:bg-blue-600" type="submit">Ladda ner</button>
         </form>
         <p>
-            <a id="delete" asp-page="DeletePersonalData" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-red-600 text-white hover:bg-red-700">Delete</a>
+            <a id="delete" asp-page="DeletePersonalData" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-red-600 text-white hover:bg-red-700">Radera</a>
         </p>
+        </div>
     </div>
 </div>
 

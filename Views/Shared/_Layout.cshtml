@@ -5,8 +5,8 @@
 
 @{
     var isUserAdmin = User.IsInRole("Admin");
-    var currentController = ViewContext.RouteData.Values["Controller"].ToString();
-    var currentAction = ViewContext.RouteData.Values["Action"].ToString();
+    var currentController = ViewContext.RouteData.Values["Controller"]?.ToString();
+    var currentAction = ViewContext.RouteData.Values["Action"]?.ToString();
 }
 
 <html lang="sv">
