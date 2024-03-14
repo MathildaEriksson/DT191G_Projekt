@@ -5,6 +5,8 @@
 
 @{
     var isUserAdmin = User.IsInRole("Admin");
+    var currentController = ViewContext.RouteData.Values["Controller"].ToString();
+    var currentAction = ViewContext.RouteData.Values["Action"].ToString();
 }
 
 <html lang="sv">
@@ -32,7 +34,7 @@
                     <div class="hidden md:block">
                         <div class="ml-10 flex items-center space-x-4">
                             <a asp-area="" asp-controller="Ad" asp-action="ApprovedAds"
-                                class="flex items-center hover:bg-darkBlue px-3 py-2 rounded-md text-white font-semibold">
+                                class="flex items-center px-3 py-2 rounded-md text-white font-semibold @(currentController == "Ad" && currentAction == "ApprovedAds" ? "bg-darkBlue" : "hover:bg-darkBlue")">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                                     stroke="currentColor" class="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -44,7 +46,7 @@
                             @if (SignInManager.IsSignedIn(User))
                             {
                                 <a asp-area="" asp-controller="Ad" asp-action="Index"
-                                    class="flex items-center hover:bg-darkBlue px-3 py-2 rounded-md text-white font-semibold">
+                                    class="flex items-center px-3 py-2 rounded-md text-white font-semibold @(currentController == "Ad" && currentAction == "Index" ? "bg-darkBlue" : "hover:bg-darkBlue")">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                         <path stroke-linecap="round" stroke-linejoin="round"

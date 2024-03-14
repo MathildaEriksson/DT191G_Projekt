@@ -4,86 +4,180 @@
 @{
     ViewData["Title"] = "Annonser";
 }
-<div class="pb-24 pt-12 lg:grid lg:grid-cols-3 lg:gap-x-8 xl:grid-cols-4">
-    <aside>
-        <h2 class="sr-only">Filters</h2>
-          <!-- Mobile filter dialog toggle, controls the 'mobileFilterDialogOpen' state. -->
-          <button type="button" class="inline-flex items-center lg:hidden">
-            <span class="text-sm font-medium text-gray-700">Filters</span>
-            <svg class="ml-1 h-5 w-5 flex-shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
-            </svg>
-          </button>
+<script src="~/js/adsPage.js" asp-append-version="true" defer></script>
 
-        <div class="hidden lg:block">
-            <form method="get" asp-action="ApprovedAds">
-                <div>
-                    <button type="submit" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-blue-600 text-white hover:bg-blue-600">Filtrera</button>
-                    <a asp-area="" asp-controller="Ad" asp-action="ApprovedAds" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-gray-600 text-white hover:bg-gray-700">Töm filter</a>
+    <div class="relative z-40 lg:hidden" aria-modal="true" role="dialog">
+      <div class="fixed inset-0 bg-black bg-opacity-25"></div>
+        <div class="fixed inset-0 z-40 flex">
+            <div class="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-6 shadow-xl">
+            <div class="flex items-center justify-between px-4">
+                <h2 class="text-lg font-medium text-gray-900">Filter</h2>
+                <button type="button" class="-mr-2 flex h-10 w-10 items-center justify-center p-2 text-gray-400 hover:text-gray-500">
+                <span class="sr-only">Close menu</span>
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+                </button>
+            </div>
+            @* Filter fields for mobile *@         
+            <form method="get" asp-action="ApprovedAds" class="p-4">
+                <div class="mb-4">
+                    <label for="searchStringMobile" class="block text-sm font-medium leading-6 text-gray-900">Sök:</label>
+                    <input type="search" name="searchString" id="searchStringMobile" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-royalBlue sm:text-sm sm:leading-6" placeholder="Sök i titel och beskrivning" value="@ViewBag.CurrentSearchString" />
                 </div>
-                <div class="mt-4">  
-                    <label for="adTypeId">Annonstyp:</label>
-                    <select name="adTypeId" id="adTypeId" asp-items="ViewBag.AdTypeId" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded">
-                    <option value="">Alla</option>
-                    </select>
+                    <div class="flex items-center justify-between">
+                        <a asp-area="" asp-controller="Ad" asp-action="ApprovedAds" class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Töm filter</a>
+                        <button type="submit" class="rounded-md bg-green-700 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600">Filtrera</button>                        
+                    </div>
+                    <div class="mt-4">  
+                        <label for="adTypeIdMobile" class="block text-sm font-medium leading-6 text-gray-900">Annonstyp:</label>
+                        <select name="adTypeId" id="adTypeIdMobile" asp-items="ViewBag.AdTypeId" class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-royalBlue sm:text-sm sm:leading-6">
+                        <option value="">Alla</option>
+                        </select>
+                    </div>
+                    <div class="mt-4">
+                        <label for="countyIdMobile" class="block text-sm font-medium leading-6 text-gray-900">Län:</label>
+                        <select name="countyId" id="countyIdMobile" asp-items="ViewBag.CountyId" class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-royalBlue sm:text-sm sm:leading-6">
+                        <option value="">Alla</option>
+                        </select>
+                    </div>
+                    <div class="flex mt-4">
+                        <div class="relative flex-grow max-w-full flex-1 mr-2">
+                            <label for="minPriceMobile" class="block text-sm font-medium leading-6 text-gray-900">Pris från:</label>
+                            <input type="number" name="minPrice" id="minPriceMobile" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-royalBlue sm:text-sm sm:leading-6" placeholder="Min" value="@ViewBag.minPrice" step="1">
+                        </div>
+                        <div class="relative flex-grow max-w-full flex-1">
+                            <label for="maxPriceMobile" class="block text-sm font-medium leading-6 text-gray-900">Pris till:</label>
+                            <input type="number" name="maxPrice" id="maxPriceMobile" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-royalBlue sm:text-sm sm:leading-6" placeholder="Max" value="@ViewBag.maxPrice" step="1">
+                        </div>
+                    </div>
+                <div class="flex mt-4">
+                    <div class="relative flex-grow max-w-full flex-1 mr-2">
+                        <label for="minHeightMobile" class="block text-sm font-medium leading-6 text-gray-900">Mankhöjd från:</label>
+                        <input type="number" name="minHeight" id="minHeightMobile" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-royalBlue sm:text-sm sm:leading-6" placeholder="Min" value="@ViewBag.minHeight" step="1">
+                    </div>
+                    <div class="relative flex-grow max-w-full flex-1">
+                        <label for="maxHeightMobile" class="block text-sm font-medium leading-6 text-gray-900">Mankhöjd till:</label>
+                        <input type="number" name="maxHeight" id="maxHeightMobile" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-royalBlue sm:text-sm sm:leading-6" placeholder="Max" value="@ViewBag.maxHeight" step="1">
+                    </div>
                 </div>
                 <div class="mt-4">
-                    <label for="searchString">Sök:</label>
-                    <input type="search" name="searchString" id="searchString" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" placeholder="Sök i titel och beskrivning" value="@ViewBag.CurrentSearchString" />
-                </div>
-                <div class="mt-4">
-                    <label for="countyId">Län:</label>
-                    <select name="countyId" id="countyId" asp-items="ViewBag.CountyId" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded">
+                    <label for="breedIdMobile" class="block text-sm font-medium leading-6 text-gray-900">Ras:</label>
+                    <select name="breedId" id="breedIdMobile" asp-items="ViewBag.BreedId" class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-royalBlue sm:text-sm sm:leading-6">
                     <option value="">Alla</option>
                     </select>
                 </div>
                 <div class="flex mt-4">
                     <div class="relative flex-grow max-w-full flex-1 mr-2">
-                        <label for="minPrice">Pris från:</label>
-                        <input type="number" name="minPrice" id="minPrice" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" placeholder="Min" value="@ViewBag.minPrice" step="1">
+                        <label for="minBirthyearMobile" class="block text-sm font-medium leading-6 text-gray-900">Född från år:</label>
+                        <input type="number" name="minBirthyear" id="minBirthyearMobile" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-royalBlue sm:text-sm sm:leading-6" placeholder="Min" value="@ViewBag.minBirthyear" step="1">
                     </div>
                     <div class="relative flex-grow max-w-full flex-1">
-                        <label for="maxPrice">Pris till:</label>
-                        <input type="number" name="maxPrice" id="maxPrice" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" placeholder="Max" value="@ViewBag.maxPrice" step="1">
+                        <label for="maxBirthyearMobile" class="block text-sm font-medium leading-6 text-gray-900">Född till år:</label>
+                        <input type="number" name="maxBirthyear" id="maxBirthyearMobile" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-royalBlue sm:text-sm sm:leading-6" placeholder="Max" value="@ViewBag.maxBirthyear" step="1">
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <label for="gender" class="block text-sm font-medium leading-6 text-gray-900">Kön:</label>
+                    @Html.DropDownList("gender", (IEnumerable<SelectListItem>)ViewBag.Gender, "Välj kön", new
+                        {
+                            id = "genderMobile",
+                            @class =
+                            "mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-royalBlue sm:text-sm sm:leading-6"
+                        })
+                </div>
+                <div class="mt-4">
+                    <label for="originId" class="block text-sm font-medium leading-6 text-gray-900">Ursprung:</label>
+                    <select name="originId" id="originIdMobile" asp-items="ViewBag.OriginId" class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-royalBlue sm:text-sm sm:leading-6">
+                        <option value="">Alla</option>
+                    </select>
+                </div>                           
+            </form>
+        </div>
+    </div>
+</div>
+<div class="pb-24 pt-12 lg:grid lg:grid-cols-3 lg:gap-x-8 xl:grid-cols-4">
+    <aside>
+        <h2 class="sr-only">Filter</h2>
+          @* Mobile filter dialog toggle *@
+          <button type="button" class="inline-flex items-center lg:hidden" id="filterToggle">
+            <span class="text-sm font-medium text-gray-700">Filter</span>
+            <svg class="ml-1 h-5 w-5 flex-shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+            </svg>
+          </button>
+
+        @* Filter fields for desktop *@
+        <div class="hidden lg:block p-3 border-r">
+            <form method="get" asp-action="ApprovedAds" class="mr-4">
+                <div class="mb-4">
+                    <label for="searchString" class="block text-sm font-medium leading-6 text-gray-900">Sök:</label>
+                    <input type="search" name="searchString" id="searchString" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-royalBlue sm:text-sm sm:leading-6" placeholder="Sök i titel och beskrivning" value="@ViewBag.CurrentSearchString" />
+                </div>
+                <div class="flex items-center justify-between">                    
+                    <a asp-area="" asp-controller="Ad" asp-action="ApprovedAds" class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Töm filter</a>
+                    <button type="submit" class="rounded-md bg-green-700 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600">Filtrera</button>
+                </div>
+                <div class="mt-4">  
+                    <label for="adTypeId" class="block text-sm font-medium leading-6 text-gray-900">Annonstyp:</label>
+                    <select name="adTypeId" id="adTypeId" asp-items="ViewBag.AdTypeId" class="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-royalBlue sm:text-sm sm:leading-6">
+                    <option value="">Alla</option>
+                    </select>
+                </div>
+
+                <div class="mt-4">
+                    <label for="countyId" class="block text-sm font-medium leading-6 text-gray-900">Län:</label>
+                    <select name="countyId" id="countyId" asp-items="ViewBag.CountyId" class="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-royalBlue sm:text-sm sm:leading-6">
+                    <option value="">Alla</option>
+                    </select>
+                </div>
+                <div class="flex mt-4">
+                    <div class="relative flex-grow max-w-full flex-1 mr-2">
+                        <label for="minPrice" class="block text-sm font-medium leading-6 text-gray-900">Pris från:</label>
+                        <input type="number" name="minPrice" id="minPrice" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-royalBlue sm:text-sm sm:leading-6" placeholder="Min" value="@ViewBag.minPrice" step="1">
+                    </div>
+                    <div class="relative flex-grow max-w-full flex-1">
+                        <label for="maxPrice" class="block text-sm font-medium leading-6 text-gray-900">Pris till:</label>
+                        <input type="number" name="maxPrice" id="maxPrice" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-royalBlue sm:text-sm sm:leading-6" placeholder="Max" value="@ViewBag.maxPrice" step="1">
                     </div>
                 </div>
             <div class="flex mt-4">
                 <div class="relative flex-grow max-w-full flex-1 mr-2">
-                    <label for="minHeight">Mankhöjd från:</label>
-                    <input type="number" name="minHeight" id="minHeight" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" placeholder="Min" value="@ViewBag.minHeight" step="1">
+                    <label for="minHeight" class="block text-sm font-medium leading-6 text-gray-900">Mankhöjd från:</label>
+                    <input type="number" name="minHeight" id="minHeight" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-royalBlue sm:text-sm sm:leading-6" placeholder="Min" value="@ViewBag.minHeight" step="1">
                 </div>
                 <div class="relative flex-grow max-w-full flex-1">
-                    <label for="maxHeight">Mankhöjd till:</label>
-                    <input type="number" name="maxHeight" id="maxHeight" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" placeholder="Max" value="@ViewBag.maxHeight" step="1">
+                    <label for="maxHeight" class="block text-sm font-medium leading-6 text-gray-900">Mankhöjd till:</label>
+                    <input type="number" name="maxHeight" id="maxHeight" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-royalBlue sm:text-sm sm:leading-6" placeholder="Max" value="@ViewBag.maxHeight" step="1">
                 </div>
             </div>
             <div class="mt-4">
-                <label for="breedId">Ras:</label>
-                <select name="breedId" id="breedId" asp-items="ViewBag.BreedId" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded">
+                <label for="breedId" class="block text-sm font-medium leading-6 text-gray-900">Ras:</label>
+                <select name="breedId" id="breedId" asp-items="ViewBag.BreedId" class="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-royalBlue sm:text-sm sm:leading-6">
                 <option value="">Alla</option>
                 </select>
             </div>
             <div class="flex mt-4">
                 <div class="relative flex-grow max-w-full flex-1 mr-2">
-                    <label for="minBirthyear">Född från år:</label>
-                    <input type="number" name="minBirthyear" id="minBirthyear" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" placeholder="Min" value="@ViewBag.minBirthyear" step="1">
+                    <label for="minBirthyear" class="block text-sm font-medium leading-6 text-gray-900">Född från år:</label>
+                    <input type="number" name="minBirthyear" id="minBirthyear" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-royalBlue sm:text-sm sm:leading-6" placeholder="Min" value="@ViewBag.minBirthyear" step="1">
                 </div>
                 <div class="relative flex-grow max-w-full flex-1">
-                    <label for="maxBirthyear">Född till år:</label>
-                    <input type="number" name="maxBirthyear" id="maxBirthyear" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" placeholder="Max" value="@ViewBag.maxBirthyear" step="1">
+                    <label for="maxBirthyear" class="block text-sm font-medium leading-6 text-gray-900">Född till år:</label>
+                    <input type="number" name="maxBirthyear" id="maxBirthyear" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-royalBlue sm:text-sm sm:leading-6" placeholder="Max" value="@ViewBag.maxBirthyear" step="1">
                 </div>
             </div>
             <div class="mt-4">
-                <label for="gender">Kön:</label>
+                <label for="gender" class="block text-sm font-medium leading-6 text-gray-900">Kön:</label>
                 @Html.DropDownList("gender", (IEnumerable<SelectListItem>)ViewBag.Gender, "Välj kön", new
                     {
                         @class =
-                        "block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded"
+                        "block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-royalBlue sm:text-sm sm:leading-6"
                     })
             </div>
             <div class="mt-4">
-                <label for="originId">Ursprung:</label>
-                <select name="originId" id="originId" asp-items="ViewBag.OriginId" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded">
+                <label for="originId" class="block text-sm font-medium leading-6 text-gray-900">Ursprung:</label>
+                <select name="originId" id="originId" asp-items="ViewBag.OriginId" class="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-royalBlue sm:text-sm sm:leading-6">
                     <option value="">Alla</option>
                 </select>
             </div>                           
@@ -91,7 +185,7 @@
     </div>
     </aside>
         <section aria-labelledby="product-heading" class="mt-6 lg:col-span-2 lg:mt-0 xl:col-span-3">
-          <h2 id="product-heading" class="sr-only">Products</h2>
+          <h2 id="product-heading" class="sr-only">Annonser</h2>
           <div class="grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:gap-x-8 xl:grid-cols-3">
 
             @foreach (var item in Model) {

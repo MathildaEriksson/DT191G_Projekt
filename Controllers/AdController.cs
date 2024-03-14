@@ -35,13 +35,13 @@ namespace EquiMarketApp.Controllers
             if (User.IsInRole("Admin"))
             {
                 // Admin can see all ads
-                adsQuery = _context.Ads.Include(a => a.AdType).Include(a => a.Breed).Include(a => a.Location).Include(a => a.Origin).Include(a => a.User).Include(a => a.Images);
+                adsQuery = _context.Ads.OrderByDescending(a => a.CreatedAt).Include(a => a.AdType).Include(a => a.Breed).Include(a => a.Location).Include(a => a.Origin).Include(a => a.User).Include(a => a.Images);
             }
             else
             {
                 // Regular user can only see their own ads
                 var userId = _userManager.GetUserId(User);
-                adsQuery = _context.Ads.Where(a => a.UserId == userId).Include(a => a.AdType).Include(a => a.Breed).Include(a => a.Location).Include(a => a.Origin).Include(a => a.User).Include(a => a.Images);
+                adsQuery = _context.Ads.Where(a => a.UserId == userId).OrderByDescending(a => a.CreatedAt).Include(a => a.AdType).Include(a => a.Breed).Include(a => a.Location).Include(a => a.Origin).Include(a => a.User).Include(a => a.Images);
             }
 
             return View(await PaginatedList<Ad>.CreateAsync(adsQuery.AsNoTracking(), pageNumber, pageSize));
@@ -112,7 +112,7 @@ namespace EquiMarketApp.Controllers
                 approvedAdsQuery = approvedAdsQuery.Where(a => a.BirthYear <= maxBirthyear.Value);
             }
 
-            approvedAdsQuery = approvedAdsQuery
+            approvedAdsQuery = approvedAdsQuery.OrderByDescending(a => a.CreatedAt)
                       .Include(a => a.AdType)
                       .Include(a => a.Breed)
                       .Include(a => a.Location)
@@ -148,6 +148,7 @@ namespace EquiMarketApp.Controllers
         public async Task<IActionResult> NonApprovedAds(int pageNumber = 1, int pageSize = 10)
         {
             var nonApprovedAdsQuery = _context.Ads.Where(a => !a.IsApproved)
+                                                    .OrderByDescending(a => a.CreatedAt)
                                                    .Include(a => a.AdType)
                                                    .Include(a => a.Breed)
                                                    .Include(a => a.Location)
@@ -175,6 +176,7 @@ namespace EquiMarketApp.Controllers
                 .Include(a => a.Location)
                 .Include(a => a.Origin)
                 .Include(a => a.User)
+                .Include(a => a.Images)
                 .FirstOrDefaultAsync(m => m.AdId == id);
             if (ad == null)
             {
