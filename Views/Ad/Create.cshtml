@@ -18,37 +18,51 @@
             <div asp-validation-summary="ModelOnly" class="mt-2 text-sm text-red-600"></div>
             <div class="mb-4">
                 <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" />
+                <input asp-for="Title"
+                    class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded"
+                    required />
                 <span asp-validation-for="Title" class="mt-2 text-sm text-red-600"></span>
             </div>
             <div class="mb-4">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" />
+                <input asp-for="Description"
+                    class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded"
+                    required />
                 <span asp-validation-for="Description" class="mt-2 text-sm text-red-600"></span>
             </div>
             <div class="mb-4">
                 <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" value="0" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" type="number" />
+                <input asp-for="Price" value="0"
+                    class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded"
+                    type="number" required />
                 <span asp-validation-for="Price" class="mt-2 text-sm text-red-600"></span>
             </div>
             <div class="mb-4">
                 <label asp-for="BirthYear" class="control-label"></label>
-                <input asp-for="BirthYear" value="0" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" type="number" />
+                <input asp-for="BirthYear" value="0"
+                    class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded"
+                    type="number" required />
                 <span asp-validation-for="BirthYear" class="mt-2 text-sm text-red-600"></span>
             </div>
             <div class="mb-4">
                 <label asp-for="Height" class="control-label"></label>
-                <input asp-for="Height" value="0" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" />
+                <input asp-for="Height" value="0"
+                    class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded"
+                    required />
                 <span asp-validation-for="Height" class="mt-2 text-sm text-red-600"></span>
             </div>
             <div class="mb-4">
                 <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" />
+                <input asp-for="Name"
+                    class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded"
+                    required />
                 <span asp-validation-for="Name" class="mt-2 text-sm text-red-600"></span>
             </div>
             <div class="mb-4">
                 <label asp-for="Gender" class="control-label"></label>
-                <select asp-for="Gender" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" asp-items="Html.GetEnumSelectList<Gender>()"></select>
+                <select asp-for="Gender"
+                    class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded"
+                    asp-items="Html.GetEnumSelectList<Gender>()"></select>
                 <span asp-validation-for="Gender" class="mt-2 text-sm text-red-600"></span>
             </div>
             @if (isUserAdmin)
@@ -62,35 +76,47 @@
             }
             <div class="mb-4">
                 <label asp-for="BreedId" class="control-label"></label>
-                <select asp-for="BreedId" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" asp-items="ViewBag.BreedId"></select>
+                <select asp-for="BreedId"
+                    class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded"
+                    asp-items="ViewBag.BreedId"></select>
             </div>
             <div class="mb-4">
                 <label asp-for="OriginId" class="control-label"></label>
-                <select asp-for="OriginId" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" asp-items="ViewBag.OriginId"></select>
+                <select asp-for="OriginId"
+                    class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded"
+                    asp-items="ViewBag.OriginId"></select>
             </div>
             <div class="mb-4">
                 <label asp-for="AdTypeId" class="control-label"></label>
-                <select asp-for="AdTypeId" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" asp-items="ViewBag.AdTypeId"></select>
+                <select asp-for="AdTypeId"
+                    class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded"
+                    asp-items="ViewBag.AdTypeId"></select>
             </div>
             <div class="mb-4">
                 <label asp-for="Location.CountyId" class="control-label">Län</label>
-                <select asp-for="Location.CountyId" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" asp-items="ViewBag.CountyId"
-                    id="countyDropdown">
+                <select asp-for="Location.CountyId"
+                    class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded"
+                    asp-items="ViewBag.CountyId" id="countyDropdown" required>
                     <option value="">Välj ett län</option>
                 </select>
             </div>
             <div class="mb-4">
                 <label asp-for="CityId" class="control-label">Stad</label>
-                <select asp-for="CityId" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" id="cityDropdown">
+                <select asp-for="CityId"
+                    class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded"
+                    id="cityDropdown" required>
                     <option value="">Välj en stad</option>
                 </select>
             </div>
             <div class="mb-4">
                 <label for="images">Bilder</label>
-                <input type="file" name="images" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" multiple accept="image/*" />
+                <input type="file" name="images"
+                    class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded"
+                    multiple accept="image/*" />
             </div>
             <div class="mb-4">
-                <input type="submit" value="Create" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-blue-600 text-white hover:bg-blue-600" />
+                <input type="submit" value="Create"
+                    class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-blue-600 text-white hover:bg-blue-600" />
             </div>
         </form>
     </div>
@@ -106,24 +132,42 @@
     }
 
     <script>
-        // Fetches cities based on the selected county and populates the city dropdown dynamically
         document.addEventListener('DOMContentLoaded', function () {
-            document.querySelector('#countyDropdown').addEventListener('change', function () {
-                var countyId = this.value;
-                var url = '@Url.Action("GetCitiesByCountyId", "Ad")';
+            var countyDropdown = document.querySelector('#countyDropdown');
+            var citySelect = document.querySelector('#cityDropdown');
+            var selectedCountyId = countyDropdown.value;
 
+            // Function to populate cities
+            function populateCities(countyId) {
+                var url = '@Url.Action("GetCitiesByCountyId", "Ad")';
                 fetch(url + '?countyId=' + countyId)
                     .then(response => response.json())
                     .then(data => {
-                        var citySelect = document.querySelector('#cityDropdown');
-                        citySelect.innerHTML = '<option value="">Select a city</option>';
+                        citySelect.innerHTML = '<option value="">Välj en stad</option>';
 
                         data.forEach(function (city) {
                             var option = new Option(city.name, city.cityId);
                             citySelect.add(option);
                         });
+
+                        // Set selected city if it was previously selected and validation failed
+        @if (ViewBag.SelectedCityId != null)
+        {
+            @:citySelect.value = '@ViewBag.SelectedCityId';
+        }
                     });
+            }
+
+            // Populate cities if a county is already selected
+            if (selectedCountyId) {
+                populateCities(selectedCountyId);
+            }
+
+            // Event listener for county change to update cities dropdown
+            countyDropdown.addEventListener('change', function () {
+                populateCities(this.value);
             });
         });
     </script>
+
 }

@@ -46,6 +46,7 @@ public class Ad
     [Display(Name = "Mankhöjd")]
     public int Height { get; set; }
 
+    [Required(ErrorMessage = "Namn är obligatoriskt")]
     [StringLength(100, ErrorMessage = "Namnet får inte vara längre än 100 tecken")]
     [Display(Name = "Namn")]
     public string? Name { get; set; }

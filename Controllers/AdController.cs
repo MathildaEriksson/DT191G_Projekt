@@ -207,6 +207,20 @@ namespace EquiMarketApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Title,Description,Price,BirthYear,Height,Name,Gender,IsApproved,BreedId,OriginId,AdTypeId,CityId")] Ad ad, List<IFormFile> images)
         {
+            if (!ModelState.IsValid)
+            {
+                // Repopulate the dropdowns when validation fails.
+                ViewData["AdTypeId"] = new SelectList(_context.AdTypes, "AdTypeId", "Name", ad.AdTypeId);
+                ViewData["BreedId"] = new SelectList(_context.Breeds, "BreedId", "Name", ad.BreedId);
+                ViewData["CityId"] = new SelectList(_context.Cities.Where(c => c.CountyId == ad.Location.CountyId), "CityId", "Name", ad.CityId);
+                ViewData["OriginId"] = new SelectList(_context.Origins, "OriginId", "Country", ad.OriginId);
+                ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+                ViewBag.CountyId = new SelectList(_context.Counties.OrderBy(c => c.Name), "CountyId", "Name", ad.Location?.CountyId);
+                ViewBag.SelectedCityId = ad.CityId;
+
+                return View(ad);
+            }
+
             if (ModelState.IsValid)
             {
                 var user = await _userManager.GetUserAsync(User);
@@ -245,12 +259,12 @@ namespace EquiMarketApp.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-
+/* 
             ViewData["AdTypeId"] = new SelectList(_context.AdTypes, "AdTypeId", "Name", ad.AdTypeId);
             ViewData["BreedId"] = new SelectList(_context.Breeds, "BreedId", "Name", ad.BreedId);
             ViewData["CityId"] = new SelectList(_context.Cities, "CityId", "Name", ad.CityId);
             ViewData["OriginId"] = new SelectList(_context.Origins, "OriginId", "Country", ad.OriginId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id"); */
             return View(ad);
         }
 
