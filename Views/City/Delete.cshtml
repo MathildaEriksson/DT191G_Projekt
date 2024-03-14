@@ -1,33 +1,39 @@
 @model EquiMarketApp.Models.City
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Radera stad";
 }
 
-<h1>Delete</h1>
-
-<h3>Are you sure you want to delete this?</h3>
+<h3 class="mt-6 mb-2">Är du säker på att du vill radera denna?</h3>
 <div>
-    <h4>City</h4>
-    <hr />
-    <dl class="flex flex-wrap ">
-        <dt class = "sm:w-1/5 pr-4 pl-4">
-            @Html.DisplayNameFor(model => model.Name)
+    <div class="sm:grid sm:grid-cols-5 gap-4 w-full py-2">
+        <dt class="sm:col-span-1 font-semibold text-gray-900">
+            Namn
         </dt>
-        <dd class = "sm:w-4/5 pr-4 pl-4">
+        <dd class="sm:col-span-4 text-gray-600">
             @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt class = "sm:w-1/5 pr-4 pl-4">
-            @Html.DisplayNameFor(model => model.County)
+        <dt class="sm:col-span-1 font-semibold text-gray-900">
+            Tillhör län
         </dt>
-        <dd class = "sm:w-4/5 pr-4 pl-4">
+        <dd class="sm:col-span-4 text-gray-600">
             @Html.DisplayFor(model => model.County.Name)
         </dd>
-    </dl>
-    
+    </div>
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="CityId" />
-        <input type="submit" value="Delete" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-red-600 text-white hover:bg-red-700" /> |
-        <a asp-action="Index">Back to List</a>
+        <div class="mt-6 flex justify-center items-center gap-x-6">
+            <a asp-action="Index" class="text-sm font-semibold leading-6 text-gray-900">Tillbaka till lista</a>
+            <button type="submit"
+                class="inline-flex items-center gap-x-1.5 rounded-md bg-red-50 px-3 py-2 text-sm font-semibold text-red-700 shadow-sm ring-1 ring-inset ring-red-600/50 hover:bg-red-100">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-6 h-6 mr-2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                </svg>
+                Radera
+            </button>
+        </div>
     </form>
 </div>
