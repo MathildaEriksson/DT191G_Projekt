@@ -141,12 +141,22 @@ namespace EquiMarketApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var adType = await _context.AdTypes.FindAsync(id);
-            if (adType != null)
+            var adType = await _context.AdTypes
+                .Include(at => at.Ads) 
+                .FirstOrDefaultAsync(m => m.AdTypeId == id);
+
+            if (adType == null)
             {
-                _context.AdTypes.Remove(adType);
+                return NotFound();
             }
 
+            if (adType.Ads.Any())
+            {
+                TempData["ErrorMessage"] = "Radering är inte tillåtet, det finns annonser av denna typ.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            _context.AdTypes.Remove(adType);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

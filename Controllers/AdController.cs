@@ -259,12 +259,7 @@ namespace EquiMarketApp.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-/* 
-            ViewData["AdTypeId"] = new SelectList(_context.AdTypes, "AdTypeId", "Name", ad.AdTypeId);
-            ViewData["BreedId"] = new SelectList(_context.Breeds, "BreedId", "Name", ad.BreedId);
-            ViewData["CityId"] = new SelectList(_context.Cities, "CityId", "Name", ad.CityId);
-            ViewData["OriginId"] = new SelectList(_context.Origins, "OriginId", "Country", ad.OriginId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id"); */
+
             return View(ad);
         }
 
@@ -336,7 +331,8 @@ namespace EquiMarketApp.Controllers
             {
                 try
                 {
-                    // Keep current userID and images
+                    // Keep current createdAt, userID and images
+                    ad.CreatedAt = existingAd.CreatedAt;
                     ad.UserId = existingAd.UserId;
                     ad.Images = existingAd.Images;
 

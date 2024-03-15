@@ -189,7 +189,9 @@
     </div>
 
     <div class="mt-6 flex items-center justify-end gap-x-6">
-        <a asp-action="Index" class="text-sm font-semibold leading-6 text-gray-900">Tillbaka till lista</a>
+        <a asp-action="Index"
+            class="text-sm font-semibold leading-6 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 px-3 py-2 rounded-md hover:bg-gray-100">Tillbaka
+            till lista</a>
         <button type="submit"
             class="inline-flex items-center gap-x-1.5 rounded-md bg-green-700 px-2 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
@@ -198,7 +200,7 @@
             </svg>
             Skapa
         </button>
-
+    </div>
 </form>
 
 @section Scripts {
@@ -230,7 +232,7 @@
         {
             @:citySelect.value = '@ViewBag.SelectedCityId';
         }
-                                                    });
+                                                        });
             }
 
             // Populate cities if a county is already selected

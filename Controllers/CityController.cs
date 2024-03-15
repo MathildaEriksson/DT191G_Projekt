@@ -149,15 +149,26 @@ namespace EquiMarketApp.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var city = await _context.Cities.FindAsync(id);
-            if (city != null)
+
+            if (city == null)
             {
-                _context.Cities.Remove(city);
+                return NotFound();
             }
 
+            // Check if any ad is associated with this city
+            var associatedAds = await _context.Ads.AnyAsync(a => a.CityId == city.CityId);
+
+            if (associatedAds)
+            {
+                TempData["ErrorMessage"] = "Radering är inte tillåtet eftersom det finns annonser associerade med denna stad.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            _context.Cities.Remove(city);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        
         private bool CityExists(int id)
         {
             return _context.Cities.Any(e => e.CityId == id);

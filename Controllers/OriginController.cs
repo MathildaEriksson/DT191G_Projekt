@@ -141,15 +141,26 @@ namespace EquiMarketApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var origin = await _context.Origins.FindAsync(id);
-            if (origin != null)
+            var origin = await _context.Origins
+                .Include(o => o.Ads) 
+                .FirstOrDefaultAsync(m => m.OriginId == id);
+
+            if (origin == null)
             {
-                _context.Origins.Remove(origin);
+                return NotFound();
             }
 
+            if (origin.Ads.Any())
+            {
+                TempData["ErrorMessage"] = "Radering är inte tillåtet eftersom det finns annonser som har detta ursprung.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            _context.Origins.Remove(origin);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
 
         private bool OriginExists(int id)
         {

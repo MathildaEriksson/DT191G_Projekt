@@ -1,7 +1,7 @@
 @model EquiMarketApp.Models.Ad
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Redigera annons";
 }
 
 @using Microsoft.AspNetCore.Identity
@@ -12,118 +12,210 @@
     var isUserAdmin = User.IsInRole("Admin");
 }
 
-<h1>Edit</h1>
+<form asp-action="Edit" enctype="multipart/form-data" class="space-y-12 sm:space-y-16">
+    <div>
+        <p class="mt-4 max-w-2xl text-sm leading-6 text-gray-600">Redigera informationen nedan för att uppdatera
+            annonsen.</p>
 
-<h4>Ad</h4>
-<hr />
-<div class="flex flex-wrap ">
-    <div class="md:w-1/3 pr-4 pl-4">
-        <form asp-action="Edit" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-red-600"></div>
+        <div
+            class="mt-10 space-y-8 border-b border-gray-900/10 pb-12 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:border-t sm:pb-0">
             <input type="hidden" asp-for="AdId" />
-            <div class="mb-4">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" />
-                <span asp-validation-for="Title" class="text-red-600"></span>
+
+            <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                <label asp-for="AdTypeId" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"></label>
+                <div class="mt-2 sm:col-span-2 sm:mt-0">
+                    <select asp-for="AdTypeId"
+                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required
+                        asp-items="ViewBag.AdTypeId">
+                        <option value="">Välj annonstyp</option>
+                    </select>
+                    <span asp-validation-for="AdTypeId" class="text-sm text-red-600"></span>
+                </div>
             </div>
-            <div class="mb-4">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" />
-                <span asp-validation-for="Description" class="text-red-600"></span>
+
+            <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                <label for="Title"
+                    class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">@Html.DisplayNameFor(model =>
+                    model.Title)</label>
+                <div class="mt-2 sm:col-span-2 sm:mt-0">
+                    <input asp-for="Title"
+                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        required />
+                    <span asp-validation-for="Title" class="text-sm text-red-600"></span>
+                </div>
             </div>
-            <div class="mb-4">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" type="number" />
-                <span asp-validation-for="Price" class="text-red-600"></span>
+
+            <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                <label asp-for="Description"
+                    class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"></label>
+                <div class="mt-2 sm:col-span-2 sm:mt-0">
+                    <input asp-for="Description" required
+                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                    <span asp-validation-for="Description" class="text-sm text-red-600"></span>
+                </div>
             </div>
-            <div class="mb-4">
-                <label asp-for="BirthYear" class="control-label"></label>
-                <input asp-for="BirthYear" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" type="number" />
-                <span asp-validation-for="BirthYear" class="text-red-600"></span>
+
+            <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                <label asp-for="Price" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"></label>
+                <div class="mt-2 sm:col-span-2 sm:mt-0">
+                    <input asp-for="Price" type="number" required
+                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                    <span asp-validation-for="Price" class="text-sm text-red-600"></span>
+                </div>
             </div>
-            <div class="mb-4">
-                <label asp-for="Height" class="control-label"></label>
-                <input asp-for="Height" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" />
-                <span asp-validation-for="Height" class="text-red-600"></span>
+
+            <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                <label asp-for="BirthYear" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"></label>
+                <div class="mt-2 sm:col-span-2 sm:mt-0">
+                    <input asp-for="BirthYear" type="number" required
+                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                    <span asp-validation-for="BirthYear" class="text-sm text-red-600"></span>
+                </div>
             </div>
-            <div class="mb-4">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" />
-                <span asp-validation-for="Name" class="text-red-600"></span>
+
+            <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                <label asp-for="Height" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"></label>
+                <div class="mt-2 sm:col-span-2 sm:mt-0">
+                    <input asp-for="Height" required
+                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                    <span asp-validation-for="Height" class="text-sm text-red-600"></span>
+                </div>
             </div>
-            <div class="mb-4">
-                <label asp-for="Gender" class="control-label"></label>
-                <select asp-for="Gender" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" asp-items="Html.GetEnumSelectList<Gender>()"></select>
-                <span asp-validation-for="Gender" class="text-red-600"></span>
+
+            <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                <label asp-for="Name" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"></label>
+                <div class="mt-2 sm:col-span-2 sm:mt-0">
+                    <input asp-for="Name" required
+                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                    <span asp-validation-for="Name" class="text-sm text-red-600"></span>
+                </div>
+            </div>
+
+            <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                <label asp-for="Gender" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"></label>
+                <div class="mt-2 sm:col-span-2 sm:mt-0">
+                    <select asp-for="Gender" required
+                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        asp-items="Html.GetEnumSelectList<Gender>()">
+                        <option value="">Välj kön</option>
+                    </select>
+                    <span asp-validation-for="Gender" class="text-sm text-red-600"></span>
+                </div>
+            </div>
+
+            <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                <label asp-for="BreedId" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"></label>
+                <div class="mt-2 sm:col-span-2 sm:mt-0">
+                    <select asp-for="BreedId" required
+                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        asp-items="ViewBag.BreedId">
+                        <option value="">Välj en ras</option>
+                    </select>
+                    <span asp-validation-for="BreedId" class="text-sm text-red-600"></span>
+                </div>
+            </div>
+
+            <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                <label asp-for="OriginId" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"></label>
+                <div class="mt-2 sm:col-span-2 sm:mt-0">
+                    <select asp-for="OriginId" required
+                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        asp-items="ViewBag.OriginId">
+                        <option value="">Välj ursprung</option>
+                    </select>
+                    <span asp-validation-for="OriginId" class="text-sm text-red-600"></span>
+                </div>
+            </div>
+
+            <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                <label asp-for="Location.CountyId"
+                    class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Län</label>
+                <div class="mt-2 sm:col-span-2 sm:mt-0">
+                    <select asp-for="Location.CountyId"
+                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required
+                        asp-items="ViewBag.CountyId" id="countyDropdown">
+                        <option value="">Välj ett län</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                <label asp-for="CityId" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Stad</label>
+                <div class="mt-2 sm:col-span-2 sm:mt-0">
+                    <select asp-for="CityId"
+                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required
+                        id="cityDropdown">
+                        <option value="">Välj en stad</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                <label for="newImages" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Ladda upp ny
+                    bild</label>
+                <div class="mt-2 sm:col-span-2 sm:mt-0">
+                    <input type="file" name="newImages"
+                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        multiple accept="image/*" />
+                </div>
             </div>
             @if (isUserAdmin)
             {
-                <div class="mb-4 relative block mb-2">
-                    <label class="text-gray-700 pl-6 mb-0">
-                        <input class="absolute mt-1 -ml-6" asp-for="IsApproved" /> @Html.DisplayNameFor(model =>
-                    model.IsApproved)
-                    </label>
+                <div class="sm:grid sm:grid-cols-3 sm:items-center sm:gap-4 sm:py-6">
+                    <label asp-for="IsApproved"
+                        class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">@Html.DisplayNameFor(model =>
+                    model.IsApproved)</label>
+                    <div class="mt-2 sm:col-span-2 sm:mt-0">
+                        <input type="checkbox" asp-for="IsApproved"
+                            class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
+                        <span asp-validation-for="IsApproved" class="text-sm text-red-600"></span>
+                    </div>
                 </div>
             }
-            <div class="mb-4">
-                <label asp-for="BreedId" class="control-label"></label>
-                <select asp-for="BreedId" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" asp-items="ViewBag.BreedId"></select>
-                <span asp-validation-for="BreedId" class="text-red-600"></span>
-            </div>
-            <div class="mb-4">
-                <label asp-for="OriginId" class="control-label"></label>
-                <select asp-for="OriginId" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" asp-items="ViewBag.OriginId"></select>
-                <span asp-validation-for="OriginId" class="text-red-600"></span>
-            </div>
-            <div class="mb-4">
-                <label asp-for="AdTypeId" class="control-label"></label>
-                <select asp-for="AdTypeId" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" asp-items="ViewBag.AdTypeId"></select>
-                <span asp-validation-for="AdTypeId" class="text-red-600"></span>
-            </div>
-            <div class="mb-4">
-                <label asp-for="Location.CountyId" class="control-label">County</label>
-                <select asp-for="Location.CountyId" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" asp-items="ViewBag.CountyId"
-                    id="countyDropdown">
-                    <option value="">Välj ett län</option>
-                </select>
-            </div>
-            <div class="mb-4">
-                <label asp-for="CityId" class="control-label">City</label>
-                <select asp-for="CityId" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" id="cityDropdown">
-                    <option value="">Välj en stad</option>
-                </select>
-            </div>
-            <div class="mb-4">
-                <label for="newImages">Ladda upp ny bild:</label>
-                <input type="file" name="newImages" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" multiple accept="image/*" />
-            </div>
-            <div class="mb-4">
-                <input type="submit" value="Save" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-blue-600 text-white hover:bg-blue-600" />
-            </div>
-        </form>
-        @if (Model.Images != null && Model.Images.Any())
-        {
-            <div>
-                <h3>Current Images</h3>
-                @foreach (var image in Model.Images)
-                {
-                    <div>
-                        <img src="@Url.Content("~/" + image.ImagePath)" alt="Bild" style="width: 150px; height: auto;" />
-                        <form asp-action="DeleteImage" asp-route-imageId="@image.ImageId" asp-route-adId="@Model.AdId"
-                            method="post">
-                            <button type="submit" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-red-600 text-white hover:bg-red-700"
-                                onclick="return confirm('Är du säker på att du vill radera denna bild?');">Delete</button>
-                        </form>
-                    </div>
-                }
-            </div>
-        }
+        </div>
     </div>
-</div>
+    <div class="mt-6 flex items-center justify-end gap-x-6">
+        <a asp-action="Index"
+            class="text-sm font-semibold leading-6 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 px-3 py-2 rounded-md hover:bg-gray-100">Tillbaka
+            till lista</a>
+        <button type="submit"
+            class="inline-flex items-center gap-x-1.5 rounded-md bg-green-700 px-2 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+            Spara
+        </button>
+    </div>
+</form>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+<!-- Displaying current images -->
+@if (Model.Images != null && Model.Images.Any())
+{
+    <div class="mt-6">
+        <h3 class="text-xl font-semibold leading-tight text-gray-900">Nuvarande bilder</h3>
+        <p class="mt-4 max-w-2xl text-sm leading-6 text-gray-600">Klicka på krysset för att radera en bild.</p>
+        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            @foreach (var image in Model.Images)
+            {
+                <div class="relative">
+                    <img src="@Url.Content("~/" + image.ImagePath)" alt="Bild" class="w-full h-auto rounded-md" />
+                    <form asp-action="DeleteImage" asp-route-imageId="@image.ImageId" asp-route-adId="@Model.AdId" method="post"
+                        class="absolute right-2 top-2">
+                        <button type="submit"
+                            class="inline-flex items-center p-1 bg-red-600 text-white rounded-full hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                            onclick="return confirm('Är du säker på att du vill radera denna bild?');">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+            }
+        </div>
+    </div>
+}
 
 @section Scripts {
     @{

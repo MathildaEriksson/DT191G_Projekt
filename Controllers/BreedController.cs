@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace EquiMarketApp.Controllers
 {
-     [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class BreedController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -141,12 +141,22 @@ namespace EquiMarketApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var breed = await _context.Breeds.FindAsync(id);
-            if (breed != null)
+            var breed = await _context.Breeds
+                .Include(b => b.Ads) 
+                .FirstOrDefaultAsync(m => m.BreedId == id);
+
+            if (breed == null)
             {
-                _context.Breeds.Remove(breed);
+                return NotFound();
             }
 
+            if (breed.Ads.Any())
+            {
+                TempData["ErrorMessage"] = "Radering är inte tillåtet eftersom det finns annonser som har denna ras.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            _context.Breeds.Remove(breed);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

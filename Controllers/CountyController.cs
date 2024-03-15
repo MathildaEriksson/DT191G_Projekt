@@ -142,22 +142,34 @@ namespace EquiMarketApp.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var county = await _context.Counties
-        .Include(c => c.Cities) // Ladda relaterade städer
-        .FirstOrDefaultAsync(m => m.CountyId == id);
+                .Include(c => c.Cities)
+                .FirstOrDefaultAsync(m => m.CountyId == id);
 
+            if (county == null)
+            {
+                return NotFound();
+            }
+
+            // Check if the county has any cities
             if (county.Cities.Any())
             {
-                // Skicka tillbaka ett felmeddelande till vyn.
                 TempData["ErrorMessage"] = "Radering av län som har städer är inte tillåtet.";
                 return RedirectToAction(nameof(Index));
             }
 
-            if (county != null)
+            // Check if any city within this county has any ads.
+            foreach (var city in county.Cities)
             {
-                _context.Counties.Remove(county);
-                await _context.SaveChangesAsync();
+                var adsInCity = await _context.Ads.AnyAsync(ad => ad.CityId == city.CityId);
+                if (adsInCity)
+                {
+                    TempData["ErrorMessage"] = "Radering av län som har annonser i dess städer är inte tillåtet.";
+                    return RedirectToAction(nameof(Index));
+                }
             }
 
+            _context.Counties.Remove(county);
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
