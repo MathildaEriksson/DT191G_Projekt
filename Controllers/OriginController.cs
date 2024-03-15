@@ -161,7 +161,6 @@ namespace EquiMarketApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
         private bool OriginExists(int id)
         {
             return _context.Origins.Any(e => e.OriginId == id);

@@ -25,8 +25,8 @@
                 <label asp-for="AdTypeId" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"></label>
                 <div class="mt-2 sm:col-span-2 sm:mt-0">
                     <select asp-for="AdTypeId"
-                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required
-                        asp-items="ViewBag.AdTypeId">
+                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        required asp-items="ViewBag.AdTypeId">
                         <option value="">Välj annonstyp</option>
                     </select>
                     <span asp-validation-for="AdTypeId" class="text-sm text-red-600"></span>
@@ -132,8 +132,8 @@
                     class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Län</label>
                 <div class="mt-2 sm:col-span-2 sm:mt-0">
                     <select asp-for="Location.CountyId"
-                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required
-                        asp-items="ViewBag.CountyId" id="countyDropdown">
+                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        required asp-items="ViewBag.CountyId" id="countyDropdown">
                         <option value="">Välj ett län</option>
                     </select>
                 </div>
@@ -143,8 +143,8 @@
                 <label asp-for="CityId" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Stad</label>
                 <div class="mt-2 sm:col-span-2 sm:mt-0">
                     <select asp-for="CityId"
-                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required
-                        id="cityDropdown">
+                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        required id="cityDropdown">
                         <option value="">Välj en stad</option>
                     </select>
                 </div>
@@ -180,9 +180,9 @@
             till lista</a>
         <button type="submit"
             class="inline-flex items-center gap-x-1.5 rounded-md bg-green-700 px-2 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 cursor-pointer">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
             </svg>
             Spara
         </button>
