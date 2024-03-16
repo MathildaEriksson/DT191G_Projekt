@@ -4,38 +4,53 @@
     ViewData["Title"] = "Starta konversation";
 }
 
-<form asp-action="Create" class="space-y-12 sm:space-y-16">
+<form asp-action="Create" class="space-y-8">
+    <input type="hidden" asp-for="AdId" />
+    <input type="hidden" asp-for="ReceiverUserId" />
     <div>
-        <p class="mt-4 max-w-2xl text-sm leading-6 text-gray-600">Fyll i informationen nedan för att starta en ny konversation.</p>
+        <p class="mt-4 max-w-2xl text-sm leading-6 text-gray-600">Fyll i informationen nedan för att starta en ny
+            konversation.</p>
 
-        <div class="mt-10 space-y-8 border-b border-gray-900/10 pb-12 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:border-t sm:pb-0">
+        <div
+            class="mt-10 space-y-8 border-b border-gray-900/10 pb-12 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:border-t sm:pb-0">
             <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
                 <label for="AdTitle" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Annons</label>
                 <div class="mt-2 sm:col-span-2 sm:mt-0">
-                    <input asp-for="AdTitle" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" readonly />
+                    <input asp-for="AdTitle"
+                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        readonly />
                 </div>
             </div>
 
             <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
-                <label for="MessageText" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Ditt meddelande</label>
+                <label for="MessageText"
+                    class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Meddelande</label>
                 <div class="mt-2 sm:col-span-2 sm:mt-0">
-                    <textarea asp-for="MessageText" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required></textarea>
+                    <textarea asp-for="MessageText" rows="3"
+                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        required></textarea>
                     <span asp-validation-for="MessageText" class="text-sm text-red-600"></span>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="mt-6 flex items-center justify-end gap-x-6">
-        <button type="submit" class="inline-flex items-center gap-x-1.5 rounded-md bg-green-700 px-2 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 cursor-pointer">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+    <div class="flex items-center justify-end gap-x-6">
+        <button type="submit"
+            class="inline-flex items-center gap-x-1.5 rounded-md bg-green-700 px-2 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
             </svg>
+
             Starta konversation
         </button>
     </div>
 </form>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
