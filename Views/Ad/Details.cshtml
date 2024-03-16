@@ -15,7 +15,7 @@
       <!-- Image gallery -->
       <div class="flex flex-col-reverse">
         <!-- Image selector -->
-        @if (Model.Images != null && Model.Images.Count() > 1)
+        @if (Model.Images != null && Model.Images.Any())
         {
           <div class="mx-auto mt-6 w-full max-w-2xl sm:block lg:max-w-none">
             <div class="grid grid-cols-4 gap-6" aria-orientation="horizontal" role="tablist">
@@ -23,11 +23,10 @@
               {
                 <button id="tabs-1-tab-@image.index"
                   class="relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-offset-4"
-                  aria-controls="tabs-1-panel-@image.index" role="tab" type="button"
-                  onclick="changeImage('@Url.Content("~/" + image.value.ImagePath)')">
+                  role="tab" type="button" onclick="changeImage('@Url.Content("~/" + image.value.ImagePath)')">
                   <span class="sr-only">View</span>
                   <span class="absolute inset-0 overflow-hidden rounded-md">
-                    <img src="@Url.Content("~/" + image.value.ImagePath)" alt=""
+                    <img src="@Url.Content("~/" + image.value.ImagePath)" alt="Annonsbild"
                       class="h-full w-full object-cover object-center">
                   </span>
                   <span class="ring-transparent pointer-events-none absolute inset-0 rounded-md ring-2 ring-offset-2"
@@ -39,12 +38,21 @@
         }
 
         <div class="aspect-h-1 aspect-w-1 w-full">
-          <img id="mainImage" src="@Url.Content("~/" + Model.Images.FirstOrDefault()?.ImagePath)" alt="Huvudbild"
-            class="h-full w-full object-cover object-center sm:rounded-lg">
+          <!-- Show first image or placeholder if no images exist -->
+          @if (Model.Images != null && Model.Images.Any())
+          {
+            <img id="mainImage" src="@Url.Content("~/" + Model.Images.FirstOrDefault().ImagePath)" alt="Huvudbild"
+              class="h-full w-full object-cover object-center sm:rounded-lg">
+          }
+          else
+          {
+            <img id="mainImage" src="@Url.Content("~/images/placeholder.png")" alt="Placeholderbild"
+              class="h-full w-full object-cover object-center sm:rounded-lg">
+          }
         </div>
       </div>
 
-      <!-- Product info -->
+      <!-- Ad info -->
       <div class="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
         <h1 class="text-3xl font-bold tracking-tight text-gray-900">@Html.DisplayFor(model => model.Title)</h1>
 
