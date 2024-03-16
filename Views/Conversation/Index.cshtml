@@ -1,0 +1,53 @@
+@model IEnumerable<EquiMarketApp.Models.Conversation>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Ad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InitiatorUser)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReceiverUser)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedAt)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ad.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InitiatorUser.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReceiverUser.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ConversationId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ConversationId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ConversationId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
