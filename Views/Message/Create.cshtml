@@ -1,0 +1,24 @@
+@model EquiMarketApp.Models.Message
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<form asp-action="Create">
+    <input type="hidden" asp-for="ConversationId" />
+    <div class="form-group">
+        <label asp-for="MessageText" class="control-label"></label>
+        <textarea asp-for="MessageText" class="form-control"></textarea>
+    </div>
+    <input type="submit" value="Skicka meddelande" class="btn btn-primary" />
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

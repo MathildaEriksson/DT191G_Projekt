@@ -12,9 +12,20 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
     }
 
-    protected override void OnModelCreating(ModelBuilder builder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(builder);
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Conversation>()
+            .HasOne(c => c.Ad)
+            .WithMany()
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Message>()
+            .HasOne(m => m.Conversation)
+            .WithMany(c => c.Messages)
+            .HasForeignKey(m => m.ConversationId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 
     public DbSet<Ad> Ads { get; set; }
@@ -24,5 +35,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<County> Counties { get; set; }
     public DbSet<City> Cities { get; set; }
     public DbSet<Image> Images { get; set; }
-
+    public DbSet<Conversation> Conversations { get; set; }
+    public DbSet<Message> Messages { get; set; }
 }

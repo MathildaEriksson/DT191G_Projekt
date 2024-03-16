@@ -1,3 +1,26 @@
+/* For conversations */
+.offset-me {
+  justify-content: flex-end;
+  text-align: left;
+}
+
+/* No offset for smaller screens */
+.no-offset {
+  margin-left: 0 !important;
+}
+
+/* Offset for larger screens */
+@media (min-width: 768px) {
+  .offset-me {
+    margin-left: 50%;
+  }
+  .offset-other {
+    margin-right: 50%;
+    justify-content: flex-start;
+    text-align: left;
+  }
+}
+
 /*
 ! tailwindcss v3.4.1 | MIT License | https://tailwindcss.com
 */
