@@ -1,42 +1,50 @@
+@using Microsoft.AspNetCore.Identity;
 @model EquiMarketApp.Models.Conversation
+@inject UserManager<ApplicationUser> UserManager
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Konversation: " + Model.Ad.Title;
+    var currentUserId = UserManager.GetUserId(User);
 }
 
-<h1>Details</h1>
+<div class="flex min-h-0 flex-1 overflow-hidden mt-4">
+    <div class="flex min-w-0 flex-1 border border-gray-200">
+        <section aria-labelledby="message-heading" class="order-last flex h-full min-w-0 flex-1 flex-col overflow-hidden">
+            <div class="h-full flex-shrink-0 border-b border-gray-200 bg-white">
+                <div class="flex h-full min-h-0 flex-col overflow-y-auto">
+                    <ul role="list" class="flex-1 space-y-2 py-4 sm:space-y-4 sm:px-6 lg:px-8">
+                        @foreach (var message in Model.Messages.OrderBy(m => m.CreatedAt))
+                        {
+                            <li class="@((message.SenderId == currentUserId) ? "offset-me bg-blue-50" : "offset-other bg-green-50") px-4 py-6 shadow sm:rounded-lg sm:px-6">
+                                <div class="sm:flex sm:items-baseline sm:justify-between">
+                                    <h3 class="text-base font-medium">
+                                        <span class="text-gray-900">@message.Sender.UserName</span>
+                                        <span class="text-gray-600">skrev</span>
+                                    </h3>
+                                    <p class="mt-1 text-sm text-gray-600">
+                                        <time datetime="@message.CreatedAt.ToString("o")">@message.CreatedAt</time>
+                                    </p>
+                                </div>
+                                <div class="mt-4 text-sm text-gray-800">
+                                    <p>@message.MessageText</p>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                    <div class="bottom-0 min-h-40 w-full space-x-3 border-t bg-white p-6">
+                        <form asp-controller="Message" asp-action="Create" method="post">
+                            <input type="hidden" name="ConversationId" value="@Model.ConversationId" />
+                            <textarea name="MessageText" rows="3" class="block w-full rounded-md border-0 py-1.5 pl-2 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-gray-900" placeholder="Skriv ett meddelande"></textarea>
+                            <div class="mt-6 flex justify-end">
+                                <a asp-action="Index" class="text-sm mr-2 font-semibold leading-6 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 px-3 py-2 rounded-md hover:bg-gray-100">Tillbaka till lista</a>
+                                <button type="submit" class="flex justify-center rounded-md bg-green-700 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600">Skicka</button>
+                            </div>
+                        </form>
+                    </div>                    
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
 
-<div>
-    <h4>Conversation</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Ad)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Ad.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.InitiatorUser)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.InitiatorUser.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ReceiverUser)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ReceiverUser.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedAt)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.ConversationId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+

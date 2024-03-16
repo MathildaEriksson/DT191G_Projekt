@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using EquiMarketApp.Data;
 using EquiMarketApp.Models;
 using EquiMarketApp.ViewModels;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 
 namespace EquiMarketApp.Controllers
@@ -32,7 +31,9 @@ namespace EquiMarketApp.Controllers
                 .Include(c => c.Ad)
                 .Include(c => c.InitiatorUser)
                 .Include(c => c.ReceiverUser)
-                .Where(c => c.InitiatorUserId == userId || c.ReceiverUserId == userId);
+                .Where(c => c.InitiatorUserId == userId || c.ReceiverUserId == userId)
+                .OrderByDescending(c => c.CreatedAt);  
+
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -49,7 +50,7 @@ namespace EquiMarketApp.Controllers
                 .Include(c => c.Ad)
                 .Include(c => c.InitiatorUser)
                 .Include(c => c.ReceiverUser)
-                .Include(c => c.Messages.OrderBy(m => m.CreatedAt)) // Sortera meddelanden
+                .Include(c => c.Messages.OrderBy(m => m.CreatedAt))
                 .FirstOrDefaultAsync(m => m.ConversationId == id);
 
             if (conversation == null || (conversation.InitiatorUserId != userId && conversation.ReceiverUserId != userId))
@@ -73,7 +74,7 @@ namespace EquiMarketApp.Controllers
             var viewModel = new ConversationCreateViewModel
             {
                 AdId = adId,
-                AdDescription = ad.Description,
+                AdTitle = ad.Title,
                 ReceiverUserId = receiverUserId
             };
 
@@ -87,75 +88,40 @@ namespace EquiMarketApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                var initiatorUserId = _userManager.GetUserId(User);
+                if (viewModel.ReceiverUserId == initiatorUserId)
+                {
+                    ModelState.AddModelError("", "Du kan inte starta en konversation med dig själv.");
+                    return View(viewModel);
+                }
+
                 var conversation = new Conversation
                 {
                     AdId = viewModel.AdId,
-                    InitiatorUserId = _userManager.GetUserId(User),
+                    InitiatorUserId = initiatorUserId,
                     ReceiverUserId = viewModel.ReceiverUserId,
                     CreatedAt = DateTime.UtcNow
                 };
 
                 _context.Add(conversation);
                 await _context.SaveChangesAsync();
+
+                // Create and save first message in the conversation
+                var message = new Message
+                {
+                    ConversationId = conversation.ConversationId,
+                    SenderId = initiatorUserId,
+                    MessageText = viewModel.MessageText,
+                    CreatedAt = DateTime.UtcNow
+                };
+
+                _context.Add(message);
+                await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
 
             return View(viewModel);
-        }
-
-        // GET: Conversation/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var conversation = await _context.Conversations.FindAsync(id);
-            if (conversation == null)
-            {
-                return NotFound();
-            }
-            ViewData["AdId"] = new SelectList(_context.Ads, "AdId", "Description", conversation.AdId);
-            ViewData["InitiatorUserId"] = new SelectList(_context.Users, "Id", "Id", conversation.InitiatorUserId);
-            ViewData["ReceiverUserId"] = new SelectList(_context.Users, "Id", "Id", conversation.ReceiverUserId);
-            return View(conversation);
-        }
-
-        // GET: Conversation/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var conversation = await _context.Conversations
-                .Include(c => c.Ad)
-                .Include(c => c.InitiatorUser)
-                .Include(c => c.ReceiverUser)
-                .FirstOrDefaultAsync(m => m.ConversationId == id);
-            if (conversation == null)
-            {
-                return NotFound();
-            }
-
-            return View(conversation);
-        }
-
-        // POST: Conversation/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var conversation = await _context.Conversations.FindAsync(id);
-            if (conversation != null)
-            {
-                _context.Conversations.Remove(conversation);
-            }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private bool ConversationExists(int id)
