@@ -6,19 +6,28 @@
 
 <div class="flex min-h-0 overflow-hidden mt-4">
     <div class="flex min-w-0">
-            <div class="relative flex h-full flex-col border border-gray-200 bg-gray-100">
-                    <ul class="divide-y divide-gray-200 border-b border-gray-200">
-                        @foreach (var conversation in Model)
-                        {
-                            <li class="relative bg-white px-6 py-5 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-600 hover:bg-gray-50">
-                                <a href="@Url.Action("Details", new { id = conversation.ConversationId })" class="block focus:outline-none">
-                                    <span class="absolute inset-0" aria-hidden="true"></span>
-                                    <p class="truncate text-sm font-medium text-gray-900">Annons: @conversation.Ad.Title</p>
-                                    <p class="truncate text-sm text-gray-500">@conversation.InitiatorUser.UserName &rarr; @conversation.ReceiverUser.UserName</p>
-                                </a>
-                            </li>
-                        }
-                    </ul>
-            </div>
+        <div class="relative flex h-full flex-col border border-gray-200 bg-gray-100">
+            @if (Model.Any())
+            {
+                <ul class="divide-y divide-gray-200 border-b border-gray-200">
+                    @foreach (var conversation in Model)
+                    {
+                        <li class="relative bg-white px-6 py-5 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-600 hover:bg-gray-50">
+                            <a href="@Url.Action("Details", new { id = conversation.ConversationId })" class="block focus:outline-none">
+                                <span class="absolute inset-0" aria-hidden="true"></span>
+                                <p class="truncate text-sm font-medium text-gray-900">Annons: @conversation.Ad.Title</p>
+                                <p class="truncate text-sm text-gray-500">@conversation.InitiatorUser.UserName &rarr; @conversation.ReceiverUser.UserName</p>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <div class="px-6 py-5">
+                    <p class="text-sm font-medium text-gray-900">Inga konversationer funna.</p>
+                </div>
+            }
+        </div>
     </div>
 </div>
