@@ -1,5 +1,7 @@
 # EquiMarket - Projekt DT191G - Mathilda Eriksson
 
+Publicerad på [EquiMarket](https://equimarket.azurewebsites.net/)
+
 EquiMarket är en webbplattform designad för att förenkla köp och försäljning av hästar. Plattformen erbjuder en användarvänlig miljö där användare kan skapa, bläddra och interagera med annonser.
 
 ## Funktioner
