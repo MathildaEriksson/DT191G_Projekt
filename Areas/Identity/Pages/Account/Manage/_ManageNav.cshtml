@@ -2,9 +2,9 @@
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
-<ul role="list" class="flex flex-1 flex-col gap-y-7 mt-2">
+<ul class="flex flex-1 flex-col gap-y-7 mt-2">
     <li>
-        <ul role="list" class="-mx-2 space-y-1">
+        <ul class="-mx-2 space-y-1">
             <li>
                 <a class="@ManageNavPages.IndexNavClass(ViewContext) group flex gap-x-3 hover:text-blue-800 rounded-md p-2 text-sm leading-6 font-semibold"
                     id="profile" asp-page="./Index">

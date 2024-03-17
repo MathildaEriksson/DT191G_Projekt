@@ -12,7 +12,7 @@
         <section aria-labelledby="message-heading" class="order-last flex h-full min-w-0 flex-1 flex-col overflow-hidden">
             <div class="h-full flex-shrink-0 border-b border-gray-200 bg-white">
                 <div class="flex h-full min-h-0 flex-col overflow-y-auto">
-                    <ul role="list" class="flex-1 space-y-2 py-4 sm:space-y-4 sm:px-6 lg:px-8">
+                    <ul class="flex-1 space-y-2 py-4 sm:space-y-4 sm:px-6 lg:px-8">
                         @foreach (var message in Model.Messages.OrderBy(m => m.CreatedAt))
                         {
                             <li class="@((message.SenderId == currentUserId) ? "offset-me bg-blue-50" : "offset-other bg-green-50") px-4 py-6 shadow sm:rounded-lg sm:px-6">
