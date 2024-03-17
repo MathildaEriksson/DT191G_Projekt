@@ -31,7 +31,7 @@ public class Ad
     [Required(ErrorMessage = "Pris är obligatoriskt")]
     [Range(1, double.MaxValue, ErrorMessage = "Priset måste vara högre än 0 kr")]
     [Display(Name = "Pris")]
-    public decimal Price { get; set; }
+    public int Price { get; set; }
 
     [Display(Name = "Skapad")]
     public DateTime CreatedAt { get; set; }
