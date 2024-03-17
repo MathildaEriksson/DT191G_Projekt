@@ -29,8 +29,6 @@ För att köra EquiMarket lokalt, följ dessa steg:
 
 ### 2. Navigera till projektets katalog och återställ NuGet-paket:
 
-``` cd EquiMarket ```
-
 ``` dotnet restore ```
 
 ### 3. Kör migrations för att skapa databasen:
