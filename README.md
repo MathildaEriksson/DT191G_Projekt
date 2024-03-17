@@ -17,7 +17,7 @@ EquiMarket är en webbplattform designad för att förenkla köp och försäljni
 - ASP.NET Core MVC
 - Entity Framework Core
 - SQLite
-- Tailwind CSS för frontend-design
+- Tailwind CSS
 
 ## Installation och körning
 
