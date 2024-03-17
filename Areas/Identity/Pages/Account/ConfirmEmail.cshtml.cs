@@ -1,5 +1,5 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
+﻿// Licensierad till .NET Foundation under en eller flera avtal.
+// .NET Foundation licensierar denna fil till dig under MIT-licensen.
 #nullable disable
 
 using System;
@@ -25,8 +25,8 @@ namespace EquiMarketApp.Areas.Identity.Pages.Account
         }
 
         /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
+        ///     Denna API stöder ASP.NET Core Identity standard UI-infrastrukturen och är inte avsedd att användas
+        ///     direkt från din kod. Denna API kan ändras eller tas bort i framtida versioner.
         /// </summary>
         [TempData]
         public string StatusMessage { get; set; }
@@ -45,7 +45,7 @@ namespace EquiMarketApp.Areas.Identity.Pages.Account
 
             code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
             var result = await _userManager.ConfirmEmailAsync(user, code);
-            StatusMessage = result.Succeeded ? "Thank you for confirming your email." : "Error confirming your email.";
+            StatusMessage = result.Succeeded ? "Tack för att bekräftade din e-post" : "Fel vid bekräftelse av e-post.";
             return Page();
         }
     }

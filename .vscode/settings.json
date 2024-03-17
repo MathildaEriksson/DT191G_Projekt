@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/3a77cb5e-bf1e-4032-bcb2-5bcacd97539b/resourceGroups/maer/providers/Microsoft.Web/sites/EquiMarket",
+    "appService.deploySubpath": "bin\\Release\\net8.0\\publish"
+}

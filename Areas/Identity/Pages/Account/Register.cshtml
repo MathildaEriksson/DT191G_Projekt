@@ -9,30 +9,30 @@
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <h2 class="text-base leading-6 font-semibold mt-4 mb-2">Skapa ett nytt konto</h2>
             <hr />
-            <div asp-validation-summary="ModelOnly" class="text-red-600" role="alert"></div>
+            <div asp-validation-summary="ModelOnly" class="mb-2 text-sm font-medium text-red-700" role="alert"></div>
             <div class="form-floating mb-3 mt-3">
                 <label asp-for="Input.Email" class="block text-sm font-medium leading-6 text-gray-900">E-post</label>
                 <input asp-for="Input.Email" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-royalBlue sm:text-sm sm:leading-6" autocomplete="username" aria-required="true"
                     placeholder="namn@example.com" />                
-                <span asp-validation-for="Input.Email" class="text-red-600"></span>
+                <span asp-validation-for="Input.Email" class="text-sm font-medium text-red-700"></span>
             </div>
             <div class="form-floating mb-3">
                 <label asp-for="Input.Name" class="block text-sm font-medium leading-6 text-gray-900">Namn</label>
                 <input asp-for="Input.Name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-royalBlue sm:text-sm sm:leading-6" autocomplete="name" aria-required="true"
                     placeholder="Namn" />                
-                <span asp-validation-for="Input.Name" class="text-red-600"></span>
+                <span asp-validation-for="Input.Name" class="text-sm font-medium text-red-700"></span>
             </div>
             <div class="form-floating mb-3">
                 <label asp-for="Input.Password" class="block text-sm font-medium leading-6 text-gray-900">Lösenord</label>
                 <input asp-for="Input.Password" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-royalBlue sm:text-sm sm:leading-6" autocomplete="new-password" aria-required="true"
                     placeholder="Lösenord" />                
-                <span asp-validation-for="Input.Password" class="text-red-600"></span>
+                <span asp-validation-for="Input.Password" class="text-sm font-medium text-red-700"></span>
             </div>
             <div class="form-floating mb-3">
                 <label asp-for="Input.ConfirmPassword" class="block text-sm font-medium leading-6 text-gray-900">Upprepa lösenord</label>
                 <input asp-for="Input.ConfirmPassword" autocomplete="new-password" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-royalBlue sm:text-sm sm:leading-6"
                     aria-required="true" placeholder="Upprepa lösenord" />                
-                <span asp-validation-for="Input.ConfirmPassword" class="text-red-600"></span>
+                <span asp-validation-for="Input.ConfirmPassword" class="text-sm font-medium text-red-700"></span>
             </div>
             <button id="registerSubmit" type="submit" class="flex w-full justify-center rounded-md bg-green-700 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600">Registrera</button>
         </form>
